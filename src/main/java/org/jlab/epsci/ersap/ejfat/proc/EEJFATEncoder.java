@@ -58,6 +58,7 @@ public class EEJFATEncoder implements Engine {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+
         try {
             socket = new DatagramSocket();
         } catch (SocketException e) {
