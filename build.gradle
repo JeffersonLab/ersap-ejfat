@@ -26,11 +26,16 @@ configurations {
 
 
 repositories {
-    maven {
-        url 'https://clasweb.jlab.org/jhep/maven/'
-    }
+
+//    maven {
+//        url 'https://clasweb.jlab.org/jhep/maven/'
+//    }
     maven {
         url 'https://clasweb.jlab.org/clas12maven/'
+    }
+
+    maven {
+        url 'https://clasweb.jlab.org/clas12maven/j4np/maven/'
     }
     mavenCentral()
     mavenLocal()
@@ -38,7 +43,9 @@ repositories {
 
 dependencies {
     compileOnly 'org.jlab.epsci:ersap-java:1.0-SNAPSHOT'
-    compile 'org.jlab.jnp:jnp-hipo:1.1-SNAPSHOT'
+    compile 'j4np:j4np-data:1.0.3'
+//    compile 'org.jlab.jnp:jnp-hipo:1.1-SNAPSHOT'
+
     compileOnly 'org.jlab.coat:coat-libs:5.1-SNAPSHOT'
 
     compileOnly 'com.google.code.findbugs:findbugs-annotations:3.0.1'
