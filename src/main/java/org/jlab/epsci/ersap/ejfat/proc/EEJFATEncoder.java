@@ -1,9 +1,13 @@
 package org.jlab.epsci.ersap.ejfat.proc;
 
+import jdk.jfr.consumer.RecordedMethod;
 import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
+import org.jlab.io.base.DataBank;
+import org.jlab.io.hipo.HipoDataEvent;
 import org.jlab.jnp.hipo.data.HipoEvent;
+import org.jlab.jnp.hipo.schema.SchemaFactory;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -29,12 +33,20 @@ public class EEJFATEncoder implements Engine {
     private static final String UDP_CLIENT_PORT = "udp_client_port";
 
     private String udpHost;
-    private int udpPort = 1234;
-    private int udpClientPort =5678;
+    private int udpPort = 0x4c42;
+    private int udpSourcePort = 5678;
 
     private InetAddress address;
     private DatagramPacket packet;
     private DatagramSocket socket;
+
+    private static final byte version = 0x1;
+    private static final byte protocol = 0x1;
+
+    volatile SchemaFactory engineDictionary;
+
+    private short id = 1;
+    private int offset = 0;
 
     @Override
     public EngineData configure(EngineData input) {
@@ -49,7 +61,7 @@ public class EEJFATEncoder implements Engine {
                 udpPort = data.getInt(UDP_PORT);
             }
             if (data.has(UDP_CLIENT_PORT)) {
-                udpClientPort = data.getInt(UDP_CLIENT_PORT);
+                udpSourcePort = data.getInt(UDP_CLIENT_PORT);
             }
         }
 
@@ -60,33 +72,65 @@ public class EEJFATEncoder implements Engine {
         }
 
         try {
-            socket = new DatagramSocket();
+            socket = new DatagramSocket(udpSourcePort);
         } catch (SocketException e) {
             e.printStackTrace();
         }
 
+        engineDictionary = new SchemaFactory();
+        engineDictionary.initFromDirectory("CLAS12DIR", "etc/bankdefs/hipo");
         return null;
     }
 
     @Override
     public EngineData execute(EngineData input) {
+        long evtNumber;
         HipoEvent event = (HipoEvent) input.getData();
-        ByteBuffer bb = ByteBuffer.wrap(event.getDataBuffer());
+        event.setSchemaFactory(engineDictionary, false);
+        HipoDataEvent dataEventHipo = new HipoDataEvent(event);
+        if (dataEventHipo.hasBank("RUN::config")) {
+            DataBank bank = dataEventHipo.getBank("RUN::config");
+            evtNumber = bank.getLong("event", 0);
 
-        byte[] data = bb.array();
-        byte[] lbMeta = new byte[16];
-        byte[] reMeta = new byte[16];
-        byte[] ba = new byte[data.length + lbMeta.length + reMeta.length];
+            // actual data object
+            ByteBuffer bb = ByteBuffer.wrap(event.getDataBuffer());
+            bb.flip();
 
-        // populate and add arrays
+            // load balancer meta data
+            ByteBuffer lbMeta = ByteBuffer.allocate(12);
+            lbMeta.put((byte) 'L');
+            lbMeta.put((byte) 'B');
+            lbMeta.put(version);
+            lbMeta.put(protocol);
+            lbMeta.putLong(evtNumber);
+            lbMeta.flip();
 
-        packet = new DatagramPacket(ba, ba.length, address, udpPort);
-        try {
-            socket.send(packet);
-        } catch (IOException e) {
-            e.printStackTrace();
+            // reassembly meta data
+            ByteBuffer reMeta = ByteBuffer.allocate(12);
+            // first 0x1002, last 0x1001, otherwise 0x1000
+            short s = 0x1000;
+            reMeta.putShort(s);
+            reMeta.putShort(id);
+            reMeta.putInt(offset);
+            reMeta.flip();
+
+            // put together byteBuffers
+            ByteBuffer payload = ByteBuffer.allocate(lbMeta.limit() + reMeta.limit() + bb.limit())
+                    .put(lbMeta)
+                    .put(reMeta)
+                    .put(bb)
+                    .rewind();
+
+            byte[] baPayload = payload.array();
+
+            packet = new DatagramPacket(baPayload, baPayload.length, address, udpPort);
+
+            try {
+                socket.send(packet);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
         return null;
     }
 
