@@ -12,12 +12,15 @@
 package org.jlab.epsci.ersap.ejfat.io.engine;
 
 import org.jlab.epsci.ersap.ejfat.io.Clas12Types;
+import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
+import org.jlab.jnp.hipo.data.HipoEvent;
 import org.jlab.jnp.hipo.io.HipoReader;
 import org.json.JSONObject;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 
@@ -56,7 +59,18 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
-            return reader.readEvent(eventNumber);
+//            return reader.readEvent(eventNumber);
+            HipoEvent event = reader.readEvent(eventNumber);
+            // actual data object
+            ByteBuffer bb = ByteBuffer.wrap(event.getDataBuffer());
+            bb.flip();
+            ByteBuffer evtN = ByteBuffer.allocate(4);
+            evtN.putInt(eventNumber);
+            ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + bb.limit())
+                    .put(evtN)
+                    .put(bb)
+                    .rewind();
+            return payload.array();
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
@@ -64,7 +78,8 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
     @Override
     protected EngineDataType getDataType() {
-        return Clas12Types.HIPO;
+//        return Clas12Types.HIPO;
+        return EngineDataType.BYTES;
     }
 
 }
