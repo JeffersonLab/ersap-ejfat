@@ -3,13 +3,19 @@
  
 ## Application architecture
 
-### `engine` subdirectory
+### `src` directory
+Contains Java code for Clas12 data streaming.
+
+### `ejfat` directory
+Contains cpp files for the encoder and reassembly engines
+
+#### `engine` subdirectory
 
 Here will go all supporting JANA classes necessary for stream processing.
 The local CmakeList.txt will create an .so artifact that will be used during the 
 service creation.
 
-### `services` subproject
+#### `services` subproject
 
 The final ERSAP services are just a tiny layer over the `engine` code.
 The most important thing to consider is thread-safety of the engine classes.
@@ -26,6 +32,13 @@ See [ERSAP C++](https://github.com/JeffersonLab/ersap-cpp#build-notes)
 for instructions how to build ersap-cpp.
 
 ## Build and deploy
+
+### `Java`
+./gardlew deploy
+Will build and deploy into a proper ERSAP locations
+(ERSAP_HOME and ERSAP_USER_DATA environment variable must be set).
+
+### `C++`
 
 Build and deploy the C++ services into `$ERSAP_HOME`:
 
