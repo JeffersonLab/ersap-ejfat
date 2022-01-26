@@ -67,8 +67,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
                     .put(evtN)
                     .put(bb)
                     .rewind();
-//            return payload.array();
-            return payload;
+            return payload.array();
         } catch (Exception e) {
             throw new EventReaderException(e);
         }

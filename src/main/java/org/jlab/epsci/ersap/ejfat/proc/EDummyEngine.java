@@ -29,9 +29,9 @@ public class EDummyEngine implements Engine {
     @Override
     public EngineData execute(EngineData input) {
        if ((i++ % 1000) == 0) {
-           ByteBuffer a = (ByteBuffer)input.getData();
-           a.flip();
-           System.out.println(a.limit());
+           byte[] ba =  (byte[])input.getData();
+           ByteBuffer bb = ByteBuffer.wrap(ba);
+           System.out.println(bb.getInt());
        }
         return input;
     }
