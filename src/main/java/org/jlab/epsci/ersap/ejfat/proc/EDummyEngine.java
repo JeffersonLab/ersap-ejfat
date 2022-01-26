@@ -27,7 +27,7 @@ public class EDummyEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-       if ((i++ % 100) == 0) System.out.println(i);
+       if ((i++ % 10000) == 0) System.out.println(i);
         return input;
     }
 
