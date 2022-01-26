@@ -5,6 +5,7 @@ import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 
+import java.nio.ByteBuffer;
 import java.util.Set;
 
 /**
@@ -28,8 +29,9 @@ public class EDummyEngine implements Engine {
     @Override
     public EngineData execute(EngineData input) {
        if ((i++ % 1000) == 0) {
-           byte[] a = (byte[])input.getData();
-           System.out.println(a[0]+"-"+a[1]+"-"+a[2]+"-"+a[3]);
+           ByteBuffer a = (ByteBuffer)input.getData();
+           a.flip();
+           System.out.println(a.getInt());
        }
         return input;
     }
