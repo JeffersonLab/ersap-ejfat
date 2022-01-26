@@ -19,6 +19,7 @@ import java.util.Set;
  * @project ersap-ejfat
  */
 public class EDummyEngine implements Engine {
+    int i;
     @Override
     public EngineData configure(EngineData input) {
         return null;
@@ -26,7 +27,7 @@ public class EDummyEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-        System.out.println("hey");
+       if ((i++ % 100) == 0) System.out.println(i);
         return input;
     }
 

@@ -46,6 +46,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
     @Override
     public int readEventCount() throws EventReaderException {
+        System.out.println("DDD "+ reader.getEventCount());
         return reader.getEventCount();
     }
 
