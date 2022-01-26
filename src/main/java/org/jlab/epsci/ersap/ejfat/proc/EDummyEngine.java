@@ -29,7 +29,7 @@ public class EDummyEngine implements Engine {
     public EngineData execute(EngineData input) {
        if ((i++ % 1000) == 0) {
            byte[] a = (byte[])input.getData();
-           System.out.println(i+" "+ a.length+"\n");
+           System.out.println(a[0]+"-"+a[1]+"-"+a[2]+"-"+a[3]);
        }
         return input;
     }
