@@ -1,0 +1,11 @@
+---
+name: EDummyEngine
+engine: org.jlab.epsci.ersap.ejfat.io.engine.EDummyEngine
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  Does nothing.

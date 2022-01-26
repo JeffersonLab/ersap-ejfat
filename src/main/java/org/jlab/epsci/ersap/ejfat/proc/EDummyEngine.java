@@ -1,5 +1,6 @@
 package org.jlab.epsci.ersap.ejfat.proc;
 
+import org.jlab.epsci.ersap.base.ErsapUtil;
 import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
@@ -35,12 +36,13 @@ public class EDummyEngine implements Engine {
 
     @Override
     public Set<EngineDataType> getInputDataTypes() {
-        return null;
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES,
+                EngineDataType.JSON);
     }
 
     @Override
     public Set<EngineDataType> getOutputDataTypes() {
-        return null;
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES);
     }
 
     @Override
@@ -50,17 +52,17 @@ public class EDummyEngine implements Engine {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Dummy engine.";
     }
 
     @Override
     public String getVersion() {
-        return null;
+        return "0.1";
     }
 
     @Override
     public String getAuthor() {
-        return null;
+        return "vg";
     }
 
     @Override
