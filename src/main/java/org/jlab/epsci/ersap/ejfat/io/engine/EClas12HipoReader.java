@@ -11,13 +11,11 @@
  */
 package org.jlab.epsci.ersap.ejfat.io.engine;
 
-import org.jlab.epsci.ersap.ejfat.io.Clas12Types;
-import org.jlab.epsci.ersap.engine.Engine;
+import j4np.hipo5.data.Event;
+import j4np.hipo5.io.HipoReader;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
-import org.jlab.jnp.hipo.data.HipoEvent;
-import org.jlab.jnp.hipo.io.HipoReader;
 import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
@@ -60,10 +58,9 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
 //            return reader.readEvent(eventNumber);
-            HipoEvent event = reader.readEvent(eventNumber);
-            // actual data object
-            ByteBuffer bb = ByteBuffer.wrap(event.getDataBuffer());
-            bb.flip();
+            Event event = new Event();
+            reader.nextEvent(event);
+            ByteBuffer bb = event.getEventBuffer(); // actual data object
             ByteBuffer evtN = ByteBuffer.allocate(4);
             evtN.putInt(eventNumber);
             ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + bb.limit())
