@@ -64,10 +64,9 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             ByteBuffer evtN = ByteBuffer.allocate(4);
             evtN.putInt(eventNumber);
             ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + bb.limit())
-                    .put(evtN)
                     .put(bb)
-                    .rewind();
-            return evtN.array();
+                    .put(evtN);
+            return payload.array();
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
