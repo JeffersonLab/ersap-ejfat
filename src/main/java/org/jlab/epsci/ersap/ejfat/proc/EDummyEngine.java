@@ -31,7 +31,7 @@ public class EDummyEngine implements Engine {
        if ((i++ % 1000) == 0) {
            ByteBuffer a = (ByteBuffer)input.getData();
            a.flip();
-           System.out.println(a.getInt());
+           System.out.println(a.limit());
        }
         return input;
     }
