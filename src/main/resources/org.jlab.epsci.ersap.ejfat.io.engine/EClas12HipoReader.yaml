@@ -1,0 +1,11 @@
+---
+name: EClas12HipoReader
+engine: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoReader
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  Reads CLAS12 data file, creats a byte[] where the first int is the event number followed by serialized HIPO event.

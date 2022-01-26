@@ -1,0 +1,16 @@
+---
+io-services:
+  reader:
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoReader
+    name: ClasSource
+  writer:
+#    class: org.jlab.epsci.stream.engine.VTPWriterEngine
+#    name: VTPWriter
+services:
+#  - class: org.jlab.epsci.stream.engine.VTPStreamTestEngine
+#    name: VTPStreamTest
+#  - class: jana_service
+#    name: JanaService
+#    lang: cpp
+mime-types:
+  - binary/data-vtp-g
