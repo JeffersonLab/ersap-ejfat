@@ -5,10 +5,10 @@ io-services:
     name: ClasSource
   writer:
     class: org.jlab.epsci.ersap.ejfat.io.engine.EDummyWriter
-    name: Dummy
+    name: DummyIO
 services:
-#  - class: org.jlab.epsci.stream.engine.VTPStreamTestEngine
-#    name: VTPStreamTest
+  - class: org.jlab.epsci.ersap.ejfat.proc.EDummyEngine
+    name: DummyEngine
 #  - class: jana_service
 #    name: JanaService
 #    lang: cpp
