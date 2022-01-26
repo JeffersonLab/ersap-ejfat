@@ -4,8 +4,8 @@ io-services:
     class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoReader
     name: ClasSource
   writer:
-#    class: org.jlab.epsci.stream.engine.VTPWriterEngine
-#    name: VTPWriter
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EDummyWriter
+    name: Dummy
 services:
 #  - class: org.jlab.epsci.stream.engine.VTPStreamTestEngine
 #    name: VTPStreamTest
