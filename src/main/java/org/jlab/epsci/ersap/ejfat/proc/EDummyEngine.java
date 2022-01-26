@@ -26,7 +26,8 @@ public class EDummyEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-        return null;
+        System.out.println("hey");
+        return input;
     }
 
     @Override
