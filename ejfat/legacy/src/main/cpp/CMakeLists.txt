@@ -1,11 +1,11 @@
 set(LEGACY_SRC
-        jana_engine
+        ejfat_packetize_engine
 )
 
-add_library(ersap_jana SHARED ${LEGACY_SRC})
-target_link_libraries(ersap_jana PUBLIC )
-target_include_directories(ersap_jana PUBLIC
+add_library(ersap_ejfat SHARED ${LEGACY_SRC})
+target_link_libraries(ersap_ejfat PUBLIC )
+target_include_directories(ersap_ejfat PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
-install(TARGETS ersap_jana DESTINATION ${CMAKE_INSTALL_PLUGINDIR}/jana/lib)
+install(TARGETS ersap_ejfat DESTINATION ${CMAKE_INSTALL_PLUGINDIR}/ejfat/lib)
