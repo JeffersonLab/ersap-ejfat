@@ -5,7 +5,8 @@ set(DEMO_SERVICES
 
 foreach(service ${DEMO_SERVICES})
   add_library(${service} SHARED ${service}.cpp)
-  target_link_libraries(${service} Ersap::ersap)
+  target_link_libraries(${service} ersap_ejfat Ersap::ersap)
+  target_include_directories(${service} PUBLIC /Users/timmer/coda/ersap-ejfat/ejfat/legacy/src/main/cpp)
   if (CMAKE_CXX_COMPILER_ID MATCHES Clang)
     target_compile_options(${service} PRIVATE -Wno-return-type-c-linkage)
   endif()
