@@ -1,7 +1,7 @@
 #include "ejfat_packetize_service.hpp"
 #include "ejfat_packetize.hpp"
 
-//#include <ejfat_engine.hpp>
+#include <ejfat_packetize_engine.hpp>
 
 #include <ersap/stdlib/json_utils.hpp>
 
