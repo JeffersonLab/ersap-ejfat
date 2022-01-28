@@ -52,6 +52,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     @Override
     public ByteOrder readByteOrder() throws EventReaderException {
         return ByteOrder.BIG_ENDIAN;
+
     }
 
     @Override
