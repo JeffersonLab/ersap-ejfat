@@ -1,4 +1,5 @@
 #include "ejfat_packetize_engine.hpp"
+#include "ejfat_packetize.hpp"
 
 #include <cmath>
 #include <iostream>
