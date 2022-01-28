@@ -55,6 +55,13 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
     }
 
+    /**
+     * This will read the Hipo event.
+     * Prepend 3 word header:
+     * 32bit int: event number
+     * 32bit int: Hipo event size
+     * 32bit int: 0x01020304 to verify endiannes
+     */
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
