@@ -51,7 +51,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
     @Override
     public ByteOrder readByteOrder() throws EventReaderException {
-        return ByteOrder.LITTLE_ENDIAN;
+        return ByteOrder.BIG_ENDIAN;
     }
 
     @Override
@@ -59,13 +59,19 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
         try {
             Event event = new Event();
             reader.nextEvent(event);
+
             ByteBuffer bb = event.getEventBuffer(); // actual data object
             ByteBuffer evtN = ByteBuffer.allocate(4);
             evtN.putInt(eventNumber);
+            ByteBuffer sz = ByteBuffer.allocate(4);
+            evtN.putInt(bb.limit());
+
+            sz.rewind();
             evtN.rewind();
             bb.rewind();
-            ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + bb.limit())
+            ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + sz.limit() + bb.limit())
                     .put(evtN)
+                    .put(sz)
                     .put(bb);
             return payload.array();
         } catch (Exception e) {
