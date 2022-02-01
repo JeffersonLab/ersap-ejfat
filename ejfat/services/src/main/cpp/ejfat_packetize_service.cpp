@@ -16,6 +16,21 @@
 #include <cstddef>
 #include <cstdint>
 
+
+#if __APPLE__
+    #define bswap_16(value) ((((value) & 0xff) << 8) | ((value) >> 8))
+
+    #define bswap_32(value) \
+    (((uint32_t)bswap_16((uint16_t)((value) & 0xffff)) << 16) | \
+    (uint32_t)bswap_16((uint16_t)((value) >> 16)))
+
+    #define bswap_64(value) \
+    (((uint64_t)bswap_32((uint32_t)((value) & 0xffffffff)) << 32) | \
+    (uint64_t)bswap_32((uint32_t)((value) >> 32)))
+#else
+    #include <byteswap.h>
+#endif
+
 #ifdef __APPLE__
 #include <cctype>
 #endif
@@ -41,11 +56,11 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     // and configure the service.
     auto config = ersap::stdlib::parse_json(input);
 
-    std::string  host = ersap::stdlib::get_string(config, "host");
-    std::string interface = ersap::stdlib::get_string(config, "interface");
+    host = ersap::stdlib::get_string(config, "host");
+    interface = ersap::stdlib::get_string(config, "interface");
 
-    int mtu = ersap::stdlib::get_int(config, "mtu");
-    int port = ersap::stdlib::get_int(config, "port");
+    mtu = ersap::stdlib::get_int(config, "mtu");
+    port = ersap::stdlib::get_int(config, "port");
 
     // Example for when the service has state that is configured by
     // the orchestrator. The "state" object should be a std::shared_ptr
@@ -63,24 +78,25 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input) {
 
     time_t end = time(nullptr);
 
-    // Pull out needed config items
-    //static int sendBuffer(char *buffer, uint32_t bufLen
-    int *eventNum = data_cast<int*>(input);
-    uint64_t tick = *eventNum;
+    // Pull out needed items from data
+    uint32_t *i = data_cast<uint32_t*>(input);
+    uint64_t tick = *i;
+    uint32_t bufLen = *(i+1);
+    uint32_t magicInt = *(i+2);
 
-    any & a = input.data();
-    int *eventNumber = any_cast<int *>(a);
+    char *buffer = reinterpret_cast<char *>(i+3);
 
-    input.mime_type();
+    bool localEndian = magicInt == 0x01020304 ? true : false;
 
-    //input.getMeta()->datatype();
-
-
-    if (end - start >= 10) {
-        // This always loads the shared_pointer into a new shared_ptr
-        std::atomic_load(&engine_)->process();
-        start = end;
+    if (!localEndian) {
+        tick = bswap_64(tick);
+        bufLen = bswap_32(bufLen);
     }
+
+    // This always loads the shared_pointer into a new shared_ptr
+    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
+    start = end;
+
     // Set and return output data
     //    output.set_data(IMAGE_TYPE, img);
     return input;

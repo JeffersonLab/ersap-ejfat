@@ -49,6 +49,12 @@ public:
 
 private:
     std::shared_ptr<EjfatPacketizeEngine> engine_{};
+
+    std::string host;
+    std::string interface;
+
+    int mtu;
+    int port;
 };
 
 } // end namespace jana

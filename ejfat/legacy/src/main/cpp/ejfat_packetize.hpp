@@ -10,11 +10,11 @@
 
 
 /**
- * @file Send file (read or piped to) to udp_rcv_order.cc program
- * This sender does NOT prepend an LB header to the data in order
- * to test it with the receiver.
+ * @file Contains routines to packetize (break into smaller UDP packets)
+ * a buffer, adding header information that will direct it to and through
+ * a special FPGA router. These packets will eventually be received at a given
+ * UDP destination equipped to reassemble it.
  */
-
 #ifndef EJFAT_PACKETIZER_H
 #define EJFAT_PACKETIZER_H
 

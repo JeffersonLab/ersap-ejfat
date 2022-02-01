@@ -1,5 +1,6 @@
 set(LEGACY_SRC
         ejfat_packetize_engine
+        ejfat_assemble_engine
 )
 
 add_library(ersap_ejfat SHARED ${LEGACY_SRC})

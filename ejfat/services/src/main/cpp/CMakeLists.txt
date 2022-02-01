@@ -1,6 +1,7 @@
 # Create one shared library per service
 set(DEMO_SERVICES
-  ejfat_packetize_service
+        ejfat_packetize_service
+        ejfat_assemble_service
 )
 
 foreach(service ${DEMO_SERVICES})
