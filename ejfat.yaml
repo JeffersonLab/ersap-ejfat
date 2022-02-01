@@ -9,8 +9,13 @@ io-services:
 services:
   - class: org.jlab.epsci.ersap.ejfat.proc.EDummyEngine
     name: DummyEngine
-#  - class: jana_service
-#    name: JanaService
-#    lang: cpp
+  - class: ejfat_packetize_service
+    name: EjfatPacketizeService
+    lang: cpp
+configuration:
+  services:
+    EjfatPacketizeService:
+      port: 7777
+      interface: 127.0.0.1
 mime-types:
   - binary/data-vtp-g
