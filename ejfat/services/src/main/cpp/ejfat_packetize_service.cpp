@@ -46,12 +46,9 @@ std::unique_ptr<ersap::Engine> create_engine()
 namespace ersap {
 namespace ejfat {
 
-    time_t start;
 
 ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 {
-    start = time(nullptr);
-
     // Ersap provides a simple JSON parser to read configuration data
     // and configure the service.
     auto config = ersap::stdlib::parse_json(input);
@@ -73,32 +70,22 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 }
 
 
-ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input) {
-    auto output = ersap::EngineData{};
-
-    time_t end = time(nullptr);
+ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
+{
 
     // Pull out needed items from data
     uint32_t *i = data_cast<uint32_t*>(input);
-    uint64_t tick = *i;
-    uint32_t bufLen = *(i+1);
-    uint32_t magicInt = *(i+2);
+    uint64_t tick = ntohl(*i);
+    uint32_t bufLen = ntohl(*(i+1));
 
-    char *buffer = reinterpret_cast<char *>(i+3);
-
-    bool localEndian = magicInt == 0x01020304 ? true : false;
-
-    if (!localEndian) {
-        tick = bswap_64(tick);
-        bufLen = bswap_32(bufLen);
-    }
+    char *buffer = reinterpret_cast<char *>(i+2);
 
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
-    start = end;
 
-    // Set and return output data
-    //    output.set_data(IMAGE_TYPE, img);
+    // This is an END point for data, return input
+    // auto output = ersap::EngineData{};
+    // output.set_data(IMAGE_TYPE, img);
     return input;
 }
 

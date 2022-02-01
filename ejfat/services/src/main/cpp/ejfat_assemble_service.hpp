@@ -50,10 +50,7 @@ public:
 private:
     std::shared_ptr<EjfatAssembleEngine> engine_{};
 
-    std::string host;
     std::string interface;
-
-    int mtu;
     int port;
 };
 

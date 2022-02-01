@@ -13,7 +13,7 @@ public:
     EjfatPacketizeEngine();
 
     void process(char *buffer, uint32_t bufLen,
-                 std::string & host, std::string & interface,
+                 std::string & host, const std::string & interface,
                  int mtu, unsigned short port, uint64_t tick);
 
     void parseConfigFile();

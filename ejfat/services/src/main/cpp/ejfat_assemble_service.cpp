@@ -46,20 +46,13 @@ std::unique_ptr<ersap::Engine> create_engine()
 namespace ersap {
 namespace ejfat {
 
-    time_t start;
-
 ersap::EngineData EjfatAssembleService::configure(ersap::EngineData& input)
 {
-    start = time(nullptr);
-
     // Ersap provides a simple JSON parser to read configuration data
     // and configure the service.
     auto config = ersap::stdlib::parse_json(input);
 
-    host = ersap::stdlib::get_string(config, "host");
     interface = ersap::stdlib::get_string(config, "interface");
-
-    mtu = ersap::stdlib::get_int(config, "mtu");
     port = ersap::stdlib::get_int(config, "port");
 
     // Example for when the service has state that is configured by
@@ -73,33 +66,24 @@ ersap::EngineData EjfatAssembleService::configure(ersap::EngineData& input)
 }
 
 
-ersap::EngineData EjfatAssembleService::execute(ersap::EngineData& input) {
-    auto output = ersap::EngineData{};
+ersap::EngineData EjfatAssembleService::execute(ersap::EngineData& input)
+{
 
-    time_t end = time(nullptr);
+    // This is a data generator, so no meaningful input
 
-    // Pull out needed items from data
-    uint32_t *i = data_cast<uint32_t*>(input);
-    uint64_t tick = *i;
-    uint32_t bufLen = *(i+1);
-    uint32_t magicInt = *(i+2);
-
-    char *buffer = reinterpret_cast<char *>(i+3);
-
-    bool localEndian = magicInt == 0x01020304 ? true : false;
-
-    if (!localEndian) {
-        tick = bswap_64(tick);
-        bufLen = bswap_32(bufLen);
-    }
+    // The process() method will allocate a buffer internally and return that
+    char *buf;
+    size_t bufLen;
+    // Create a buffer for us
+    bool noCopy = true;
 
     // This always loads the shared_pointer into a new shared_ptr
-    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
-    start = end;
+    std::atomic_load(&engine_)->process(&buf, &bufLen, port, interface.c_str(), noCopy);
 
     // Set and return output data
-    //    output.set_data(IMAGE_TYPE, img);
-    return input;
+    auto output = ersap::EngineData{};
+    output.set_data(ersap::type::BYTES, buf);
+    return output;
 }
 
 ersap::EngineData EjfatAssembleService::execute_group(const std::vector<ersap::EngineData>&)

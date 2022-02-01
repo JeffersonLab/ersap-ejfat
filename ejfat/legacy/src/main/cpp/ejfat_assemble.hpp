@@ -176,7 +176,7 @@ static void printFileBytes(FILE *fp, uint32_t bytes, const char *label) {
  *         If there's an error in recvmsg, it will return RECV_MSG.
  *         If the packet data is NOT completely read (truncated), it will return TRUNCATED_MSG.
  */
-static int readPacket(char *dataBuf, int bufLen, int udpSocket,
+static int readPacket(char *dataBuf, size_t bufLen, int udpSocket,
                       uint32_t* sequence, int* dataId, int* version,
                       bool *first, bool *last) {
 
@@ -283,7 +283,7 @@ static void freeMap(std::map<uint32_t, std::tuple<char *, uint32_t, bool, bool>>
  *         If a packet has improper value for first or last bit, it will return BAD_FIRST_LAST_BIT.
  *         If cannot allocate memory, it will return OUT_OF_MEM.
  */
-static ssize_t getPacketizedBuffer(char* dataBuf, int bufLen, int udpSocket,
+static ssize_t getPacketizedBuffer(char* dataBuf, size_t bufLen, int udpSocket,
                                    bool veryFirstRead, bool *last, uint32_t *expSequence, uint32_t *bytesPerPacket,
                                    std::map<uint32_t, std::tuple<char *, uint32_t, bool, bool>> & outOfOrderPackets) {
 
@@ -293,13 +293,14 @@ static ssize_t getPacketizedBuffer(char* dataBuf, int bufLen, int udpSocket,
     uint32_t sequence, expectedSequence = *expSequence;
 
     bool packetFirst, packetLast, firstReadForBuf = false, tooLittleRoom = false;
-    int  dataId, version, nBytes, maxPacketBytes = 0;
+    int  dataId, version, nBytes;
+    size_t maxPacketBytes = 0;
     ssize_t totalBytesRead = 0;
 
     char *putDataAt = dataBuf;
-    int remainingLen = bufLen;
+    size_t remainingLen = bufLen;
 
-    if (debug) fprintf(stderr, "getPacketizedBuffer: remainingLen = %d\n", remainingLen);
+    if (debug) fprintf(stderr, "getPacketizedBuffer: remainingLen = %lu\n", remainingLen);
 
     while (true) {
         // Read in one packet
@@ -371,7 +372,7 @@ static ssize_t getPacketizedBuffer(char* dataBuf, int bufLen, int udpSocket,
                 maxPacketBytes = nBytes;
                 firstReadForBuf = false;
                 //maxPacketsInBuf = bufLen / maxPacketBytes;
-                if (debug) fprintf(stderr, "In first read, max bytes/packet = %d\n", maxPacketBytes);
+                if (debug) fprintf(stderr, "In first read, max bytes/packet = %lu\n", maxPacketBytes);
 
                 // Error check
                 if (veryFirstRead && !packetFirst) {
@@ -386,7 +387,7 @@ static ssize_t getPacketizedBuffer(char* dataBuf, int bufLen, int udpSocket,
                 return BAD_FIRST_LAST_BIT;
             }
 
-            if (debug) fprintf(stderr, "remainingLen = %d, expected offset = %u, first = %s, last = %s\n",
+            if (debug) fprintf(stderr, "remainingLen = %lu, expected offset = %u, first = %s, last = %s\n",
                                remainingLen, expectedSequence, btoa(packetFirst), btoa(packetLast));
 
             // If no stored, out-of-order packets ...
@@ -497,7 +498,8 @@ int writeBuffer(const char* dataBuf, size_t nBytes, FILE* fp) {
  * @param noCopy        If true, write data directly into userBuf. If there's not enough room, an error is thrown.
  *                      If false, an internal buffer is allocated and returned in the userBuf arg.
  *
- * @return If there's an error in recvmsg, it will return RECV_MSG.
+ * @return 0 if success.
+ *         If there's an error in recvmsg, it will return RECV_MSG.
  *         If the packet data is NOT completely read (truncated), it will return TRUNCATED_MSG.
  *         If the buffer is too small to receive a single packet's data, it will return BUF_TOO_SMALL.
  *         If a packet is out of order and no recovery is possible (e.g. duplicate sequence),
@@ -506,7 +508,7 @@ int writeBuffer(const char* dataBuf, size_t nBytes, FILE* fp) {
  *         If cannot allocate memory, it will return OUT_OF_MEM.
  *         If userBuf is null or *userBuf is null when noCopy is true, it will return BAD_ARG.
  */
-static int getBuffer(char** userBuf, int32_t *userBufLen, unsigned short port, char *listeningAddr, bool noCopy) {
+static int getBuffer(char** userBuf, size_t *userBufLen, unsigned short port, const char *listeningAddr, bool noCopy) {
 
 
     if (userBuf == nullptr || userBufLen == nullptr) {

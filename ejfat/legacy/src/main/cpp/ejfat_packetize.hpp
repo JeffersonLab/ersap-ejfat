@@ -298,7 +298,7 @@ namespace ejfat {
       * @return 0 if OK, -1 if error when sending packet.
 
       */
-    static int sendBuffer(char *buffer, uint32_t bufLen, std::string & host, std::string & interface,
+    static int sendBuffer(char *buffer, uint32_t bufLen, std::string & host, const std::string & interface,
                           int mtu, unsigned short port, uint64_t tick) {
 
         if (host.empty()) {
@@ -310,9 +310,12 @@ namespace ejfat {
         // If the mtu was not set, attempt to get it progamatically.
         if (mtu == 0) {
             if (interface.empty()) {
-                interface = "eth0";
+                //interface = "eth0";
+                mtu = getMTU("eth0");
             }
-             mtu = getMTU(interface.c_str());
+            else {
+                mtu = getMTU(interface.c_str());
+            }
         }
 
         // Jumbo (> 1500) ethernet frames are 9000 bytes max. Don't exceed this limit.

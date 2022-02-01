@@ -1,7 +1,6 @@
 #include "ejfat_packetize_engine.hpp"
 #include "ejfat_packetize.hpp"
 
-#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -46,13 +45,16 @@ namespace ejfat {
 
 
     void EjfatPacketizeEngine::process(char *buffer, uint32_t bufLen,
-                                       std::string & host, std::string & interface,
+                                       std::string & host, const std::string & interface,
                                        int mtu, unsigned short port, uint64_t tick)
     {
         std::cout << "EJFAT processing..." << std::endl;
 
-        sendBuffer(buffer, bufLen, host, interface,
-                   mtu, port, tick);
+        int err = sendBuffer(buffer, bufLen, host, interface, mtu, port, tick);
+        if (err < 0) {
+            fprintf(stderr, "Error sending packets\n");
+            exit (-1);
+        }
     }
 } // end namespace ejfat
 } // end namespace ersap

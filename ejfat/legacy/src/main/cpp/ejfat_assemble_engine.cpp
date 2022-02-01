@@ -1,7 +1,6 @@
 #include "ejfat_assemble_engine.hpp"
 #include "ejfat_assemble.hpp"
 
-#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -11,15 +10,15 @@ namespace ejfat {
 
 
     EjfatAssembleEngine::EjfatAssembleEngine() {
-        // Look for a local config file (assemble.yaml)
+        // Look for a local config file (assembler.yaml)
 
 
     }
 
     void EjfatAssembleEngine::parseConfigFile() {
-        std::ifstream file("./assemble.yaml");
+        std::ifstream file("./assembler.yaml");
         if (!file) {
-            std::cout << "unable to open ./assemble.yaml file";
+            std::cout << "unable to open ./assembler.yaml file";
             exit (-1);
         }
 
@@ -39,14 +38,18 @@ namespace ejfat {
     }
 
 
-    void EjfatAssembleEngine::process(char *buffer, uint32_t bufLen,
-                                       std::string & host, std::string & interface,
-                                       int mtu, unsigned short port, uint64_t tick)
+    void EjfatAssembleEngine::process(char **userBuf, size_t *userBufLen,
+                                       unsigned short port, const char *listeningAddr,
+                                       bool noCopy)
     {
-        std::cout << "EJFAT processing..." << std::endl;
+        std::cout << "EJFAT assembling ..." << std::endl;
+        //static int getBuffer(char** userBuf, int32_t *userBufLen, unsigned short port, char *listeningAddr, bool noCopy) {
 
-        //sendBuffer(buffer, bufLen, host, interface,
-        //           mtu, port, tick);
+        int err = getBuffer(userBuf, userBufLen, port, listeningAddr, noCopy);
+        if (err < 0) {
+            fprintf(stderr, "Error assembling packets, err = %d\n", err);
+            exit (-1);
+        }
     }
 } // end namespace ejfat
 } // end namespace ersap

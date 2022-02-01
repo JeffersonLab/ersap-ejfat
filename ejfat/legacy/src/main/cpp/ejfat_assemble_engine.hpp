@@ -12,9 +12,9 @@ public:
 
     EjfatAssembleEngine();
 
-    void process(char *buffer, uint32_t bufLen,
-                 std::string & host, std::string & interface,
-                 int mtu, unsigned short port, uint64_t tick);
+    void process(char **userBuf, size_t *userBufLen,
+                 unsigned short port, const char *listeningAddr,
+                 bool noCopy);
 
     void parseConfigFile();
 
