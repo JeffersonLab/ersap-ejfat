@@ -17,7 +17,6 @@ import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
 import org.json.JSONObject;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
@@ -73,17 +72,13 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             evtN.putInt(eventNumber);
             ByteBuffer sz = ByteBuffer.allocate(4);
             evtN.putInt(bb.limit());
-            ByteBuffer ed = ByteBuffer.allocate(4);
-            evtN.putInt(0x01020304);
 
-            ed.rewind();
             sz.rewind();
             evtN.rewind();
             bb.rewind();
-            ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + sz.limit() + ed.limit() + bb.limit())
+            ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + sz.limit() + bb.limit())
                     .put(evtN) // tick
                     .put(sz)   // hipo event size
-                    .put(ed)   // edniannnes of the three word header
                     .put(bb);
             return payload.array();
         } catch (Exception e) {
