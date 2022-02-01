@@ -15,7 +15,9 @@ services:
 configuration:
   services:
     EjfatPacketizeService:
-      port: 7777
-      interface: 127.0.0.1
+      port: 19522
+      host: 129.57.29.231
+      interface: eth0
+      mtu: 1024
 mime-types:
   - binary/data-vtp-g
