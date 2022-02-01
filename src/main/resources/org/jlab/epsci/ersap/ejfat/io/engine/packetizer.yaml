@@ -1,0 +1,15 @@
+---
+name: ejat_packetize_engine
+engine: ejfat/legacy/src/main/cpp/ejfat_packetize_engine
+type: C++
+
+author: Carl Timmer
+email: timmer@jlab.org
+
+version: 0.1
+description: takes input data, converts it to UDP packets and sends to destination
+
+port: 19522
+host: 127.0.0.1
+interface: eth0
+mtu: 1500

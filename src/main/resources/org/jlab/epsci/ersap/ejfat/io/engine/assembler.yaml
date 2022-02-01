@@ -1,0 +1,13 @@
+---
+name: ejfat_assemble_engine
+engine: ejfat/legacy/src/main/cpp/ejfat_assemble_engine
+type: C++
+
+author: Carl Timmer
+email: timmer@jlab.org
+
+version: 0.1
+description: receives data packetized by the ejfat_packetizer_engine and reassembles it into a single buffer
+
+port: 7777
+interface: 127.0.0.1
