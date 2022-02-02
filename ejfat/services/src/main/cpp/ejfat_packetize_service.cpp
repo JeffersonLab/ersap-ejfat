@@ -72,7 +72,11 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
+ auto output = ersap::EngineData{};
 
+    time_t end = time(nullptr);
+
+    if (end - start >= 10) {
     // Pull out needed items from data
     uint32_t *i = data_cast<uint32_t*>(input);
     uint64_t tick = ntohl(*i);
@@ -83,9 +87,8 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
 
-    // This is an END point for data, return input
-    // auto output = ersap::EngineData{};
-    // output.set_data(IMAGE_TYPE, img);
+    start = end;
+}
 
     return input;
 }

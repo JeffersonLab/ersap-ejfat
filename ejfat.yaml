@@ -20,4 +20,4 @@ configuration:
       interface: eth0
       mtu: 1024
 mime-types:
-  - binary/data-vtp-g
+  - binary/bytes
