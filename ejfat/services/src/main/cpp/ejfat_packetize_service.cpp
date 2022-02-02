@@ -81,7 +81,7 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 //
 //    if (end - start >= 10) {
     std::cout << "in CPP 1" << std::endl;
-    unit32_t* byteArray = data_cast<unti32_t*>(input);
+    unit32_t* byteArray = data_cast<unit32_t*>(input);
      std::cout << "in CPP 2" << std::endl;
 
     // Pull out needed items from data
