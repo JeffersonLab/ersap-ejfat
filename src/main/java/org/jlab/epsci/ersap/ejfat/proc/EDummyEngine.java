@@ -30,7 +30,7 @@ public class EDummyEngine implements Engine {
     @Override
     public EngineData execute(EngineData input) {
         System.out.println(i);
-       if ((i++ % 100) == 0) {
+       if ((i++ % 1000) == 0) {
            byte[] ba =  (byte[])input.getData();
            ByteBuffer bb = ByteBuffer.wrap(ba);
            System.out.println(bb.getInt());
