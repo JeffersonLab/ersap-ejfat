@@ -81,19 +81,18 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 //
 //    if (end - start >= 10) {
     std::cout << "in CPP 1" << std::endl;
-    // Pull out needed items from data
     Byte* byteArray = data_cast<Byte*>(input);
-//    uint32_t *i = data_cast<uint32_t*>(input);
      std::cout << "in CPP 2" << std::endl;
-   uint64_t tick = ntohl(*i);
-    uint32_t bufLen = ntohl(*(i+1));
 
-    std::cout << tick;
+    // Pull out needed items from data
+//    uint32_t *i = data_cast<uint32_t*>(input);
+//   uint64_t tick = ntohl(*i);
+//    uint32_t bufLen = ntohl(*(i+1));
 
-    char *buffer = reinterpret_cast<char *>(i+2);
+//    char *buffer = reinterpret_cast<char *>(i+2);
 
     // This always loads the shared_pointer into a new shared_ptr
-    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
+//    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
 //    start = end;
 //}
 
