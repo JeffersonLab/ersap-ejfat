@@ -63,7 +63,6 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     port = 19522;
     ver = 1;
     dataId = 1;
-    debug = false;
 
     // Values from config file
     if (ersap::stdlib::has_key(config, "host")) {
@@ -71,9 +70,6 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     }
     if (ersap::stdlib::has_key(config, "interface")) {
         interface = ersap::stdlib::get_string(config, "interface");
-    }
-    if (ersap::stdlib::has_key(config, "debug")) {
-        debug = ersap::stdlib::get_bool(config, "debug");
     }
     if (ersap::stdlib::has_key(config, "mtu")) {
         mtu = ersap::stdlib::get_int(config, "mtu");
@@ -102,15 +98,22 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
 
+//    auto& ba = data_cast<std::vector<std::uint8_t>>(input);
+
+//     std::cout << "in cpp" << std::endl;
+
     // Pull out needed items from data
-    auto & vec = data_cast<std::vector<uint8_t>>(input);
+    auto vec = data_cast<std::vector<uint8_t>>(input);
     uint64_t tick   = ntohl(*reinterpret_cast<const uint32_t*>(&vec[0]));
     uint32_t bufLen = ntohl(*reinterpret_cast<const uint32_t*>(&vec[4]));
     char *buffer    = reinterpret_cast<char*>(&vec[8]);
 
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface,
-                                        mtu, port, tick, ver, dataId, debug);
+                                        mtu, port, tick, ver, dataId);
+    start = end;
+}
+
     return input;
 }
 

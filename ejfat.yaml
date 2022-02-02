@@ -19,5 +19,7 @@ configuration:
       host: 129.57.29.231
       interface: eth0
       mtu: 1024
+      version: 1
+      dataId: 1
 mime-types:
   - binary/bytes
