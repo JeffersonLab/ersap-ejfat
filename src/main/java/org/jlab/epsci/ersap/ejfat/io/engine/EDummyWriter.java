@@ -42,6 +42,7 @@ public class EDummyWriter extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected void writeEvent(Object event) throws EventWriterException {
+        System.out.printf(" koko ");
     }
 
     @Override
