@@ -35,6 +35,7 @@ public class EDummyEngine implements Engine {
 //           System.out.println(bb.getInt());
 
            ByteBuffer bb = (ByteBuffer)input.getData();
+           bb.rewind();
            System.out.println(bb.getInt());
        }
         return input;
