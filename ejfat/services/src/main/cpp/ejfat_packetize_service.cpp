@@ -76,28 +76,20 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
 
-// auto output = ersap::EngineData{};
-//    time_t end = time(nullptr);
-//
-//    if (end - start >= 10) {
-    std::cout << "in CPP 1" << std::endl;
-//    char* byteArray = data_cast<char*>(input);
     auto& ba = data_cast<std::vector<std::uint8_t>>(input);
 
-     std::cout << "in CPP 2" << std::endl;
-
+//     std::cout << "in cpp" << std::endl;
+/*
     // Pull out needed items from data
-//    uint32_t *i = data_cast<uint32_t*>(input);
-//   uint64_t tick = ntohl(*i);
-//    uint32_t bufLen = ntohl(*(i+1));
+    uint32_t *i = data_cast<uint32_t*>(input);
+   uint64_t tick = ntohl(*i);
+    uint32_t bufLen = ntohl(*(i+1));
 
-//    char *buffer = reinterpret_cast<char *>(i+2);
+    char *buffer = reinterpret_cast<char *>(i+2);
 
     // This always loads the shared_pointer into a new shared_ptr
-//    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
-//    start = end;
-//}
-
+    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
+*/
     return input;
 }
 
