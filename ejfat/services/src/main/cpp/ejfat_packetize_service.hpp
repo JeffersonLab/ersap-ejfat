@@ -58,6 +58,8 @@ private:
     int port;
     int ver;
     int dataId;
+
+    bool debug;
 };
 
 } // end namespace jana

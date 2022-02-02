@@ -24,9 +24,10 @@ namespace ejfat {
         // Look for a local config file (assembler.yaml)
         port = 7777;
         interface = "127.0.0.1";
+        debug = false;
     }
 
-    
+
     static std::vector<std::string> split(const std::string &s, char delim)
     {
         std::stringstream ss(s);
@@ -79,6 +80,11 @@ namespace ejfat {
             else if (key == "interface") {
                 interface = val;
             }
+            else if (key == "debug") {
+                if (val == "true" || val == "on") {
+                    debug = true;
+                }
+            }
         }
     }
 
@@ -91,7 +97,7 @@ namespace ejfat {
         std::cout << "EJFAT assembling ..." << std::endl;
         //static int getBuffer(char** userBuf, int32_t *userBufLen, unsigned short port, char *listeningAddr, bool noCopy) {
 
-        int err = getBuffer(userBuf, userBufLen, port, listeningAddr, noCopy);
+        int err = getBuffer(userBuf, userBufLen, port, listeningAddr, noCopy, debug);
         if (err < 0) {
             fprintf(stderr, "Error assembling packets, err = %d\n", err);
             exit (-1);

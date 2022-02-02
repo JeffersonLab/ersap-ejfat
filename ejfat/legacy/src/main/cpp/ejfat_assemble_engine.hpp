@@ -22,6 +22,7 @@ private:
 
     std::string interface;
     int port;
+    bool debug;
 
 };
 
