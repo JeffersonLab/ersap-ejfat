@@ -55,6 +55,8 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     start = time(nullptr);
 
     // Defaults
+
+    
     host = "127.0.0.1";
     interface = "eth0";
     mtu = 1024;
