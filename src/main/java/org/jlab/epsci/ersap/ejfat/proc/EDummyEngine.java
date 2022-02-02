@@ -29,10 +29,10 @@ public class EDummyEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-       if ((i++ % 1000) == 0) {
+       if ((i++ % 10000) == 0) {
            ByteBuffer bb = (ByteBuffer)input.getData();
            bb.rewind();
-           System.out.println(bb.getInt());
+           System.out.println("in Java "+ bb.getInt());
        }
         return input;
     }
