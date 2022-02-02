@@ -46,12 +46,15 @@ std::unique_ptr<ersap::Engine> create_engine()
 namespace ersap {
 namespace ejfat {
 
+time_t start;
 
 ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 {
     // Ersap provides a simple JSON parser to read configuration data
     // and configure the service.
     auto config = ersap::stdlib::parse_json(input);
+
+    start = time(nullptr);
 
     host = ersap::stdlib::get_string(config, "host");
     interface = ersap::stdlib::get_string(config, "interface");
