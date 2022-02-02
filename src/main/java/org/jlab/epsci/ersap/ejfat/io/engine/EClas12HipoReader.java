@@ -59,7 +59,6 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
      * Prepend 3 word header:
      * 32bit int: event number
      * 32bit int: Hipo event size
-     * 32bit int: 0x01020304 to verify endiannes
      */
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
@@ -68,9 +67,10 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             System.out.println(" hey1 ");
 
             reader.nextEvent(event);
-            System.out.println(" hey2 ");
 
             ByteBuffer bb = event.getEventBuffer(); // actual data object
+            System.out.println(" hey2 ");
+
             ByteBuffer evtN = ByteBuffer.allocate(4);
             evtN.putInt(eventNumber);
             ByteBuffer sz = ByteBuffer.allocate(4);
@@ -83,7 +83,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
                     .put(evtN) // tick
                     .put(sz)   // hipo event size
                     .put(bb);
-            System.out.println(" hey ");
+            System.out.println("  ======= hey ");
 
             return payload.array();
         } catch (Exception e) {
