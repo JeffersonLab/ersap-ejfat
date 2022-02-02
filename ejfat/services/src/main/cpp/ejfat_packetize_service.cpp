@@ -97,12 +97,9 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
 
-//    auto& ba = data_cast<std::vector<std::uint8_t>>(input);
-
-//     std::cout << "in cpp" << std::endl;
+    auto vec = data_cast<std::vector<uint8_t>>(input);
 
     // Pull out needed items from data
-    auto vec = data_cast<std::vector<uint8_t>>(input);
     uint64_t tick   = ntohl(*reinterpret_cast<const uint32_t*>(&vec[0]));
     uint32_t bufLen = ntohl(*reinterpret_cast<const uint32_t*>(&vec[4]));
     char *buffer    = reinterpret_cast<char*>(&vec[8]);
