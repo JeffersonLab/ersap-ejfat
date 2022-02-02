@@ -65,7 +65,10 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
             Event event = new Event();
+            System.out.println(" hey1 ");
+
             reader.nextEvent(event);
+            System.out.println(" hey2 ");
 
             ByteBuffer bb = event.getEventBuffer(); // actual data object
             ByteBuffer evtN = ByteBuffer.allocate(4);
@@ -80,6 +83,8 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
                     .put(evtN) // tick
                     .put(sz)   // hipo event size
                     .put(bb);
+            System.out.println(" hey ");
+
             return payload.array();
         } catch (Exception e) {
             throw new EventReaderException(e);
