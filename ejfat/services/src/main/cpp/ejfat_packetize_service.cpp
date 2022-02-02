@@ -72,7 +72,7 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
-/*
+
     // Pull out needed items from data
     uint32_t *i = data_cast<uint32_t*>(input);
     uint64_t tick = ntohl(*i);
@@ -86,7 +86,7 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
     // This is an END point for data, return input
     // auto output = ersap::EngineData{};
     // output.set_data(IMAGE_TYPE, img);
-*/
+
     return input;
 }
 
