@@ -118,7 +118,7 @@ namespace ejfat {
                                        int mtu, unsigned short port, uint64_t tick,
                                        int version, int dataId, bool debug)
     {
-        std::cout << "EJFAT processing..." << std::endl;
+//        std::cout << "EJFAT processing..." << std::endl;
 
         int err = sendBuffer(buffer, bufLen, host, interface,
                              mtu, port, tick, version, dataId, debug);
