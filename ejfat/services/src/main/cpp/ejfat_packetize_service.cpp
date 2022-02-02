@@ -85,7 +85,7 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
     uint64_t tick = ntohl(*i);
     uint32_t bufLen = ntohl(*(i+1));
 
-    cout << tick;
+    std::cout << tick;
 
     char *buffer = reinterpret_cast<char *>(i+2);
 
