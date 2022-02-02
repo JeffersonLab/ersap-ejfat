@@ -75,8 +75,8 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
+/*
  auto output = ersap::EngineData{};
-
     time_t end = time(nullptr);
 
     if (end - start >= 10) {
@@ -89,10 +89,9 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
-
     start = end;
 }
-
+*/
     return input;
 }
 
