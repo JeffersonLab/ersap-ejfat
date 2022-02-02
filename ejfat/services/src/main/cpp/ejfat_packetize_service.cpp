@@ -78,10 +78,9 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 
  auto output = ersap::EngineData{};
     time_t end = time(nullptr);
-    std::cout << "Hey " << " " << start << " "<< end << std::endl;
 
     if (end - start >= 10) {
-
+    std::cout << "Hey " << " " << start << " "<< end << std::endl;
     // Pull out needed items from data
     uint32_t *i = data_cast<uint32_t*>(input);
     uint64_t tick = ntohl(*i);
