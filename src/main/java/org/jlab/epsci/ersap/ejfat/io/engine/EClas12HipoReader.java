@@ -79,10 +79,10 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             evtN.rewind();
             sz.rewind();
             bb.rewind();
-            ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + sz.limit() + bb.limit())
+            ByteBuffer payload = ByteBuffer.allocate(evtN.limit() + sz.limit())
                     .put(evtN) // tick
-                    .put(sz)  // length
-                    .put(bb);
+                    .put(sz);  // length
+//                    .put(bb);
 
             payload.rewind();
             return payload.array();
