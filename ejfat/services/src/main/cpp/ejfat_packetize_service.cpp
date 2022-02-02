@@ -6,15 +6,13 @@
 #include <ersap/stdlib/json_utils.hpp>
 #include <ersap/engine_data.hpp>
 
-#include <cmath>
 #include <iostream>
-
-#include <chrono>
 #include <sys/time.h>
 #include <ctime>
 #include <atomic>
 #include <cstddef>
 #include <cstdint>
+#include <vector>
 
 
 #if __APPLE__
@@ -56,11 +54,33 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 
     start = time(nullptr);
 
-    host = ersap::stdlib::get_string(config, "host");
-    interface = ersap::stdlib::get_string(config, "interface");
+    // Defaults
+    host = "127.0.0.1";
+    interface = "eth0";
+    mtu = 1024;
+    port = 19522;
+    ver = 1;
+    dataId = 1;
 
-    mtu = ersap::stdlib::get_int(config, "mtu");
-    port = ersap::stdlib::get_int(config, "port");
+    // Values from config file
+    if (ersap::stdlib::has_key(config, "host")) {
+        host = ersap::stdlib::get_string(config, "host");
+    }
+    if (ersap::stdlib::has_key(config, "interface")) {
+        interface = ersap::stdlib::get_string(config, "interface");
+    }
+    if (ersap::stdlib::has_key(config, "mtu")) {
+        mtu = ersap::stdlib::get_int(config, "mtu");
+    }
+    if (ersap::stdlib::has_key(config, "port")) {
+        port = ersap::stdlib::get_int(config, "port");
+    }
+    if (ersap::stdlib::has_key(config, "version")) {
+        ver = ersap::stdlib::get_int(config, "version");
+    }
+    if (ersap::stdlib::has_key(config, "dataId")) {
+        dataId = ersap::stdlib::get_int(config, "dataId");
+    }
 
     // Example for when the service has state that is configured by
     // the orchestrator. The "state" object should be a std::shared_ptr
@@ -81,15 +101,17 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 //     std::cout << "in cpp" << std::endl;
 /*
     // Pull out needed items from data
-    uint32_t *i = data_cast<uint32_t*>(input);
-   uint64_t tick = ntohl(*i);
-    uint32_t bufLen = ntohl(*(i+1));
-
-    char *buffer = reinterpret_cast<char *>(i+2);
+    auto vec = data_cast<std::vector<uint8_t>>(input);
+    uint64_t tick   = ntohl(*reinterpret_cast<const uint32_t*>(&vec[0]));
+    uint32_t bufLen = ntohl(*reinterpret_cast<const uint32_t*>(&vec[4]));
+    char *buffer    = reinterpret_cast<char*>(&vec[8]);
 
     // This always loads the shared_pointer into a new shared_ptr
-    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
-*/
+    std::atomic_load(&engine_)->process(buffer, bufLen, host, interface,
+                                        mtu, port, tick, ver, dataId);
+    start = end;
+}
+
     return input;
 }
 

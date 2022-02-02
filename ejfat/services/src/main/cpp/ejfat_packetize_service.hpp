@@ -56,6 +56,8 @@ private:
 
     int mtu;
     int port;
+    int ver;
+    int dataId;
 };
 
 } // end namespace jana

@@ -23,6 +23,8 @@ namespace ejfat {
         // Default values
         port = 19522;
         mtu  = 1024;
+        version = 1;
+        dataId = 1;
         host = "127.0.0.1";
         interface = "eth0";
     }
@@ -83,6 +85,18 @@ namespace ejfat {
                     mtu = 1024;
                 }
             }
+            else if (key == "version") {
+                version = (int)strtol(val.c_str(), (char **)nullptr, 10);
+                if ((version == 0) && (errno == EINVAL || errno == ERANGE)) {
+                    version = 1;
+                }
+            }
+            else if (key == "dataId") {
+                dataId = (int)strtol(val.c_str(), (char **)nullptr, 10);
+                if ((dataId == 0) && (errno == EINVAL || errno == ERANGE)) {
+                    dataId = 1;
+                }
+            }
             else if (key == "host") {
                 host = val;
             }
@@ -95,11 +109,13 @@ namespace ejfat {
 
     void EjfatPacketizeEngine::process(char *buffer, uint32_t bufLen,
                                        std::string & host, const std::string & interface,
-                                       int mtu, unsigned short port, uint64_t tick)
+                                       int mtu, unsigned short port, uint64_t tick,
+                                       int version, int dataId)
     {
         std::cout << "EJFAT processing..." << std::endl;
 
-        int err = sendBuffer(buffer, bufLen, host, interface, mtu, port, tick);
+        int err = sendBuffer(buffer, bufLen, host, interface,
+                             mtu, port, tick, version, dataId);
         if (err < 0) {
             fprintf(stderr, "Error sending packets\n");
             exit (-1);
