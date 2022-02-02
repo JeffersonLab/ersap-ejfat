@@ -4,6 +4,7 @@ import org.jlab.epsci.ersap.base.ErsapUtil;
 import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
+import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.util.Set;
@@ -22,14 +23,24 @@ import java.util.Set;
 
 public class EDummyEngine implements Engine {
     int i;
+    private static final String PRINT_INTERVAL = "print-interval";
+    private int pi;
+
     @Override
     public EngineData configure(EngineData input) {
+        if (input.getMimeType().equalsIgnoreCase(EngineDataType.JSON.mimeType())) {
+            String source = (String) input.getData();
+            JSONObject data = new JSONObject(source);
+            if (data.has(PRINT_INTERVAL)) {
+                pi = data.getInt(PRINT_INTERVAL);
+            }
+        }
         return null;
     }
 
     @Override
     public EngineData execute(EngineData input) {
-       if ((i++ % 10000) == 0) {
+       if ((i++ % pi) == 0) {
            ByteBuffer bb = (ByteBuffer)input.getData();
            bb.rewind();
            System.out.println("in Java "+ bb.getInt());
