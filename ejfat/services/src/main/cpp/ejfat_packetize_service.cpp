@@ -72,7 +72,7 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
-
+/*
     // Pull out needed items from data
     uint32_t *i = data_cast<uint32_t*>(input);
     uint64_t tick = ntohl(*i);
@@ -86,6 +86,7 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
     // This is an END point for data, return input
     // auto output = ersap::EngineData{};
     // output.set_data(IMAGE_TYPE, img);
+*/
     return input;
 }
 
@@ -102,7 +103,7 @@ std::vector<ersap::EngineDataType> EjfatPacketizeService::input_data_types() con
 
 std::vector<ersap::EngineDataType> EjfatPacketizeService::output_data_types() const
 {
-    return { ersap::type::JSON, ersap::type::BYTES };
+    return { ersap::type::BYTES };
 }
 
 
@@ -120,7 +121,7 @@ std::string EjfatPacketizeService::name() const
 
 std::string EjfatPacketizeService::author() const
 {
-    return "Vardan Gyurjyan";
+    return "Carl Timmer";
 }
 
 
