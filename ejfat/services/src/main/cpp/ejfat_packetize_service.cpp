@@ -75,7 +75,7 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
 
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
-/*
+
  auto output = ersap::EngineData{};
     time_t end = time(nullptr);
 
@@ -91,7 +91,7 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface, mtu, port, tick);
     start = end;
 }
-*/
+
     return input;
 }
 
