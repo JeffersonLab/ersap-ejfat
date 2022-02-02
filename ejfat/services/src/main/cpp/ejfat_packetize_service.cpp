@@ -78,7 +78,7 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 
  auto output = ersap::EngineData{};
     time_t end = time(nullptr);
-    std::cout << "Hey" << start << end;
+    std::cout << "Hey " << " " << start << " "<< end << endl;
 
     if (end - start >= 10) {
 
