@@ -98,7 +98,6 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     return {};
 }
 
-
 ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 {
 
