@@ -45,11 +45,11 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            System.out.println("in Java "+ bb.getInt() + " "+bb.limit());
        }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return input;
     }
 
