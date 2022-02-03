@@ -50,7 +50,6 @@ public class EDummyEngine implements Engine {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.exit(-1);
         return input;
     }
 
