@@ -45,6 +45,7 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            System.out.println("in Java "+ bb.getInt());
        }
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
