@@ -63,6 +63,7 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     port = 19522;
     ver = 1;
     dataId = 1;
+    protocol = 1;
     debug = false;
 
     // Values from config file
@@ -79,13 +80,16 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
         mtu = ersap::stdlib::get_int(config, "mtu");
     }
     if (ersap::stdlib::has_key(config, "port")) {
-        port = ersap::stdlib::get_int(config, "port");
+        port = (uint16_t) ersap::stdlib::get_int(config, "port");
     }
     if (ersap::stdlib::has_key(config, "version")) {
         ver = ersap::stdlib::get_int(config, "version");
     }
     if (ersap::stdlib::has_key(config, "dataId")) {
-        dataId = ersap::stdlib::get_int(config, "dataId");
+        dataId = (uint16_t) ersap::stdlib::get_int(config, "dataId");
+    }
+    if (ersap::stdlib::has_key(config, "protocol")) {
+        protocol = ersap::stdlib::get_int(config, "protocol");
     }
 
     // Example for when the service has state that is configured by
@@ -109,7 +113,7 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface,
-                                        mtu, port, tick, ver, dataId, debug);
+                                        mtu, port, tick, protocol, ver, dataId, debug);
     return input;
 }
 

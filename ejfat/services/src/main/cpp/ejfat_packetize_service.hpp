@@ -55,9 +55,11 @@ private:
     std::string interface;
 
     int mtu;
-    int port;
     int ver;
-    int dataId;
+    int protocol;
+
+    uint16_t port;
+    uint16_t dataId;
 
     bool debug;
 };
