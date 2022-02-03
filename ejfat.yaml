@@ -4,16 +4,21 @@ io-services:
     class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoReader
     name: ClasSource
   writer:
-    class: org.jlab.epsci.ersap.ejfat.io.engine.EDummyWriter
-    name: DummyIO
+#    class: org.jlab.epsci.ersap.ejfat.io.engine.EDummyWriter
+#    name: DummyIO
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EEventWriter
+    name: EEventWriter
 services:
   - class: org.jlab.epsci.ersap.ejfat.proc.EDummyEngine
     name: DummyEngine
-  - class: ejfat_packetize_service
-    name: EjfatPacketizeService
-    lang: cpp
+#  - class: ejfat_packetize_service
+#    name: EjfatPacketizeService
+#    lang: cpp
 configuration:
   services:
+    io-services:
+      writer:
+        file-events: 10000
     DummyEngine:
       print-interval: 1000
     EjfatPacketizeService:

@@ -1,0 +1,11 @@
+---
+name: EEventWriter
+engine: org.jlab.epsci.ersap.ejfat.io.engine.EEventWriter
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  Writes serialized CLAS12 Events into a file
