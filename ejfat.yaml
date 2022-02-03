@@ -21,6 +21,7 @@ configuration:
         file-events: 10000
     DummyEngine:
       print-interval: 1000
+      delay: 0
     EjfatPacketizeService:
       port: 19522
       host: 129.57.29.231

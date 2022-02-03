@@ -24,7 +24,9 @@ import java.util.Set;
 public class EDummyEngine implements Engine {
     int i;
     private static final String PRINT_INTERVAL = "print-interval";
+    private static final String DELAY = "delay";
     private int pi;
+    private int delay;
 
     @Override
     public EngineData configure(EngineData input) {
@@ -33,6 +35,9 @@ public class EDummyEngine implements Engine {
             JSONObject data = new JSONObject(source);
             if (data.has(PRINT_INTERVAL)) {
                 pi = data.getInt(PRINT_INTERVAL);
+            }
+            if (data.has(DELAY)) {
+                delay = data.getInt(DELAY);
             }
         }
         return null;
@@ -45,11 +50,11 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            System.out.println("in Java "+ bb.getInt() + " "+bb.limit());
        }
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(delay * 1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return input;
     }
 
