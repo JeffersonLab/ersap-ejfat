@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Path;
 
 /**
@@ -52,7 +53,8 @@ public class EEventWriter extends AbstractEventWriterService<FileWriter> {
     protected void writeEvent(Object event) throws EventWriterException {
         evtCount++;
         try {
-            writer.write((char[]) event);
+            ByteBuffer b = (ByteBuffer)event;
+            writer.write(String.valueOf(b.array()));
             if (evtCount >= numFileEvents) {
                 evtCount = 0;
                 writer.close();
