@@ -68,7 +68,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             reader.nextEvent(event);
 
             ByteBuffer bb = event.getEventBuffer(); // actual data object
-
+            System.out.println("DDDCC "+bb.limit());
             bb.rewind();
             ByteBuffer payload = ByteBuffer.allocate(bb.limit() + 8)
                     .putInt(eventNumber) // tick
