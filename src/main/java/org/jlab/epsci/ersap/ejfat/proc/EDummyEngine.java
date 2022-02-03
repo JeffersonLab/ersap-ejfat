@@ -43,7 +43,7 @@ public class EDummyEngine implements Engine {
        if ((i++ % pi) == 0) {
            ByteBuffer bb = (ByteBuffer)input.getData();
            bb.rewind();
-           System.out.println("in Java "+ bb.getInt());
+           System.out.println("in Java "+ bb.getInt() + " "+bb.limit());
        }
 
         try {
