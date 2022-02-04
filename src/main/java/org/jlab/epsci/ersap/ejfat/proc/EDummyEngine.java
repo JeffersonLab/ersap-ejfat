@@ -98,7 +98,6 @@ public class EDummyEngine implements Engine {
 
     @Override
     public void reset() {
-
     }
 
     @Override
