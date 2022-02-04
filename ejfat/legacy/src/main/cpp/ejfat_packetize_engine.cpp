@@ -138,7 +138,7 @@ namespace ejfat {
         int err = sendBuffer(buffer, bufLen, host, interface,
                              mtu, port, tick, protocol, version, dataId, delay, debug);
         if (err < 0) {
-            fprintf(stderr, "Error sending packets\n");
+            fprintf(stderr, "\nError in ejfat_packetize_engine.process(): %s\n", strerror(errno));
             exit (-1);
         }
     }
