@@ -55,6 +55,7 @@ public class EEventWriter extends AbstractEventWriterService<FileWriter> {
         try {
             ByteBuffer b = (ByteBuffer)event;
             writer.write(String.valueOf(b.array()));
+            System.out.println("DDD ========  "+evtCount +" "+numFileEvents);
             if (evtCount >= numFileEvents) {
                 evtCount = 0;
                 writer.close();
