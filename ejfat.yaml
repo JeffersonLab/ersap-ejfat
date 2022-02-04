@@ -11,9 +11,9 @@ io-services:
 services:
   - class: org.jlab.epsci.ersap.ejfat.proc.EDummyEngine
     name: DummyEngine
-#  - class: ejfat_packetize_service
-#    name: EjfatPacketizeService
-#    lang: cpp
+  - class: ejfat_packetize_service
+    name: EjfatPacketizeService
+    lang: cpp
 configuration:
   io-services:
     writer:
@@ -29,5 +29,6 @@ configuration:
       mtu: 1024
       version: 1
       dataId: 1
+      delay: 12
 mime-types:
   - binary/bytes
