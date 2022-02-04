@@ -17,6 +17,7 @@ services:
 configuration:
   services:
     io-services:
+      reader:
       writer:
         file-events: 10000
     DummyEngine:

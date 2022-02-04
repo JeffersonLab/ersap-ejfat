@@ -32,6 +32,7 @@ public class EEventWriter extends AbstractEventWriterService<FileWriter> {
     protected FileWriter createWriter(Path file, JSONObject opts)
             throws EventWriterException {
         numFileEvents = opts.has(FILE_EVENTS) ? opts.getInt(FILE_EVENTS) : 100000;
+        System.out.println("DDDD "+opts.has(FILE_EVENTS)+" "+numFileEvents);
         this.file = file;
         try {
             return new FileWriter(file.toString());
