@@ -44,7 +44,7 @@
 
 // Is this going to an FPGA or FPGA simulator?
 // i.e. will the LB header need to added?
-//#define ADD_LB_HEADER 1
+#define ADD_LB_HEADER 1
 
 #ifdef ADD_LB_HEADER
     #define LB_HEADER_BYTES 12
