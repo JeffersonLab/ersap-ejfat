@@ -15,11 +15,10 @@ services:
 #    name: EjfatPacketizeService
 #    lang: cpp
 configuration:
+  io-services:
+    writer:
+      file-events: 10000
   services:
-    io-services:
-      reader:
-      writer:
-        file-events: 10000
     DummyEngine:
       print-interval: 1000
       delay: 0
