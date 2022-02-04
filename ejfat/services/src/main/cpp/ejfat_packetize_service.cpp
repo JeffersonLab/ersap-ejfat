@@ -114,8 +114,6 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface,
                                         mtu, port, tick, protocol, ver, dataId, debug);
-
-    exit(-1);
     return input;
 }
 
