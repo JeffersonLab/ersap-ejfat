@@ -58,6 +58,8 @@ private:
     int ver;
     int protocol;
 
+    uint32_t delay; // millisec
+
     uint16_t port;
     uint16_t dataId;
 

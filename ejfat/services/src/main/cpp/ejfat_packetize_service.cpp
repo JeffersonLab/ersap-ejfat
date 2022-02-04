@@ -64,6 +64,7 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     ver = 1;
     dataId = 1;
     protocol = 1;
+    delay = 0;
     debug = false;
 
     // Values from config file
@@ -84,6 +85,9 @@ ersap::EngineData EjfatPacketizeService::configure(ersap::EngineData& input)
     }
     if (ersap::stdlib::has_key(config, "version")) {
         ver = ersap::stdlib::get_int(config, "version");
+    }
+    if (ersap::stdlib::has_key(config, "delay")) {
+        delay = ersap::stdlib::get_int(config, "delay");
     }
     if (ersap::stdlib::has_key(config, "dataId")) {
         dataId = (uint16_t) ersap::stdlib::get_int(config, "dataId");
@@ -113,7 +117,8 @@ ersap::EngineData EjfatPacketizeService::execute(ersap::EngineData& input)
 
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(buffer, bufLen, host, interface,
-                                        mtu, port, tick, protocol, ver, dataId, debug);
+                                        mtu, port, tick, protocol, ver,
+                                        dataId, delay, debug);
     return input;
 }
 

@@ -15,7 +15,8 @@ public:
     void process(char *buffer, uint32_t bufLen,
                  std::string & host, const std::string & interface,
                  int mtu, uint16_t port, uint64_t tick,
-                 int protocol, int version, uint16_t dataId, bool debug);
+                 int protocol, int version, uint16_t dataId,
+                 uint32_t delay, bool debug);
 
     void parseConfigFile();
 
@@ -27,6 +28,8 @@ private:
     int mtu;
     int version;
     int protocol;
+
+    uint32_t delay; // milliseconds
 
     uint16_t port;
     uint16_t dataId;

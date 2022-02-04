@@ -28,6 +28,8 @@
 #include <string>
 #include <getopt.h>
 #include <cinttypes>
+#include <chrono>
+#include <thread>
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -40,10 +42,9 @@
 #endif
 
 
-
 // Is this going to an FPGA or FPGA simulator?
 // i.e. will the LB header need to added?
-#define ADD_LB_HEADER 1
+//#define ADD_LB_HEADER 1
 
 #ifdef ADD_LB_HEADER
     #define LB_HEADER_BYTES 12
@@ -57,6 +58,24 @@
 #ifdef __linux__
     #define htonll(x) ((1==htonl(1)) ? (x) : (((uint64_t)htonl((x) & 0xFFFFFFFFUL)) << 32) | htonl((uint32_t)((x) >> 32)))
     #define ntohll(x) ((1==ntohl(1)) ? (x) : (((uint64_t)ntohl((x) & 0xFFFFFFFFUL)) << 32) | ntohl((uint32_t)((x) >> 32)))
+#endif
+
+
+#ifndef _BYTESWAP_H
+    #define _BYTESWAP_H
+
+    static inline uint16_t bswap_16(uint16_t x) {
+        return (x>>8) | (x<<8);
+    }
+
+    static inline uint32_t bswap_32(uint32_t x) {
+        return (bswap_16(x&0xffff)<<16) | (bswap_16(x>>16));
+    }
+
+    static inline uint64_t bswap_64(uint64_t x) {
+        return (((uint64_t)bswap_32(x&0xffffffffull))<<32) |
+                          (bswap_32(x>>32));
+    }
 #endif
 
 #define btoa(x) ((x)?"true":"false")
@@ -117,7 +136,6 @@ namespace ejfat {
          * @param protocol protocol this software uses.
          */
         static void setLbMetadata(char* buffer, uint64_t tick, int version, int protocol) {
-            // Put 1 32-bit word, followed by 1 64-bit word in network byte order, followed by 32 bits of data
 
             // protocol 'L:8, B:8, Version:8, Protocol:8, Tick:64'
             // 0                   1                   2                   3
@@ -130,14 +148,11 @@ namespace ejfat {
             // |                                                               |
             // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-            //if (debug) printf("LB first word = 0x%x\n", firstWord);
-            //if (debug) printf("LB tick = 0x%llx (%llu)\n\n", tick, tick);
-
-            // Put the data in network byte order (big endian)
             *buffer     = 'L';
             *(buffer+1) = 'B';
             *(buffer+2) = version;
             *(buffer+3) = protocol;
+            // Put the data in network byte order (big endian)
             *((uint64_t *)(buffer + 4)) = htonll(tick);
         }
 
@@ -148,39 +163,77 @@ namespace ejfat {
     #endif
 
 
-    /**
-     * Set the Reassembly Header data.
-     * The first 16 bits go as ordered. The dataId is put in network byte order.
-     * The offset is also put into network byte order.
-     * @param buffer  buffer in which to write the header.
-     * @param first   is this the first packet?
-     * @param last    is this the last packet?
-     * @param offset  the packet sequence number.
-     * @param version the version of this software.
-     * @param dataId  the data source id number.
-     */
-    static void setReMetadata(char* buffer, bool first, bool last,
-                              uint32_t offset, int version, uint16_t dataId) {
-        // Put 2 32-bit words in network byte order
+        /**
+         * <p>Set the Reassembly Header data.
+         * The first 16 bits go as ordered. The dataId is put in network byte order.
+         * The offset is also put into network byte order.</p>
+         * Implemented using C++ bit fields.
+         *
+         * @param buffer  buffer in which to write the header.
+         * @param first   is this the first packet?
+         * @param last    is this the last packet?
+         * @param offset  the packet sequence number.
+         * @param version the version of this software.
+         * @param dataId  the data source id number.
+         */
+        static void setReMetadataBitField(char* buffer, bool first, bool last,
+                                          uint32_t offset, int version, uint16_t dataId) {
 
-        // protocol 'Version:4, Rsvd:10, First:1, Last:1, Data-ID:16, Offset:32'
-        // 0                   1                   2                   3
-        // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-        // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-        // |Version|        Rsvd       |F|L|            Data-ID            |
-        // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-        // |                  UDP Packet Offset                            |
-        // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            // protocol 'Version:4, Rsvd:10, First:1, Last:1, Data-ID:16, Offset:32'
+            // 0                   1                   2                   3
+            // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+            // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            // |Version|        Rsvd       |F|L|            Data-ID            |
+            // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            // |                  UDP Packet Offset                            |
+            // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-        union reHeader* header = (union reHeader*)buffer;
+            union reHeader* header = (union reHeader*)buffer;
 
-        header->reFields.version = version;
-        header->reFields.first = first;
-        header->reFields.last = last;
-        header->reFields.data_id = htons(dataId);
-        header->reFields.sequence = htonl(offset);
-    }
+            header->reFields.version = version;
+            header->reFields.first = first;
+            header->reFields.last = last;
+            header->reFields.data_id = htons(dataId);
+            header->reFields.sequence = htonl(offset);
+        }
 
+
+        /**
+         * <p>Set the Reassembly Header data.
+         * The first 16 bits go as ordered. The dataId is put in network byte order.
+         * The offset is also put into network byte order.</p>
+         * Implemented <b>without</b> using C++ bit fields.
+         *
+         * @param buffer  buffer in which to write the header.
+         * @param first   is this the first packet?
+         * @param last    is this the last packet?
+         * @param offset  the packet sequence number.
+         * @param version the version of this software.
+         * @param dataId  the data source id number.
+         */
+        static void setReMetadata(char* buffer, bool first, bool last,
+                                  uint32_t offset, int version, uint16_t dataId) {
+
+            // protocol 'Version:4, Rsvd:10, First:1, Last:1, Data-ID:16, Offset:32'
+            // 0                   1                   2                   3
+            // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+            // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            // |Version|        Rsvd       |F|L|            Data-ID            |
+            // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            // |                  UDP Packet Offset                            |
+            // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+            uint16_t firstShort = (version & 0x1f) | first << 14 | last << 15;
+            // When sending, we need to ensure that the LSB (version) goes first.
+            // Transform to big endian, then swap.
+            firstShort = bswap_16(htons(firstShort));
+            dataId = htons(dataId);
+            offset = htonl(offset);
+
+            *((uint16_t *)buffer) = firstShort;
+            *((uint16_t *)(buffer + 2)) = dataId;
+            *((uint32_t *)(buffer + 4)) = offset;
+        }
 
 
      /**
@@ -201,15 +254,17 @@ namespace ejfat {
       * @param dataId         data id in reassembly header.
       * @param offset         value-result parameter that passes in the sequence number of first packet
       *                       and returns the sequence to use for next packet to be sent.
+      * @param delay          delay in millisec between each packet being sent.
       * @param firstBuffer    if true, this is the first buffer to send in a sequence.
       * @param lastBuffer     if true, this is the last buffer to send in a sequence.
-      * @param debug         turn debug printout on & off.
+      * @param debug          turn debug printout on & off.
       *
       * @return 0 if OK, -1 if error when sending packet.
       */
     static int sendPacketizedBuffer(char* dataBuffer, size_t dataLen, int maxUdpPayload,
                                    int clientSocket, struct sockaddr_in* destination,
-                                   uint64_t tick, int protocol, int version, uint16_t dataId, uint32_t *offset,
+                                   uint64_t tick, int protocol, int version, uint16_t dataId,
+                                   uint32_t *offset, uint32_t delay,
                                    bool firstBuffer, bool lastBuffer, bool debug) {
 
         int totalDataBytesSent = 0;
@@ -294,12 +349,18 @@ namespace ejfat {
                 }
             }
 
+            // delay if any
+            if (delay > 0) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+            }
+
             totalDataBytesSent += bytesToWrite;
             remainingBytes -= bytesToWrite;
             getDataFrom += bytesToWrite;
             veryFirstPacket = false;
 
-            if (debug) printf("Sent pkt, total %d, remaining bytes = %d\n\n", totalDataBytesSent, remainingBytes);
+            if (debug) printf("Sent pkt %u, total %d, remaining bytes = %d\n\n",
+                              (packetCounter - 1), totalDataBytesSent, remainingBytes);
         }
 
         *offset = packetCounter;
@@ -327,13 +388,14 @@ namespace ejfat {
       * @param tick       tick value for Load Balancer header used in directing packets to final host.
       * @param version    version in reassembly header.
       * @param dataId     data id in reassembly header.
-      * @param debug     turn debug printout on & off.
+      * @param delay      delay in millisec between each packet being sent.
+      * @param debug      turn debug printout on & off.
       *
       * @return 0 if OK, -1 if error when sending packet.
       */
     static int sendBuffer(char *buffer, uint32_t bufLen, std::string & host, const std::string & interface,
                           int mtu, uint16_t port, uint64_t tick, int protocol,
-                          int version, uint16_t dataId, bool debug) {
+                          int version, uint16_t dataId, uint32_t delay, bool debug) {
 
         if (host.empty()) {
             // Default to sending to local host
@@ -379,7 +441,8 @@ namespace ejfat {
         if (debug) printf("Setting max UDP payload size to %d bytes, MTU = %d\n", maxUdpPayload, mtu);
 
         int err =  sendPacketizedBuffer(buffer, bufLen, maxUdpPayload, clientSocket, &serverAddr,
-                                        tick, protocol, version, dataId, &offset, true, true, debug);
+                                        tick, protocol, version, dataId, &offset, delay,
+                                        true, true, debug);
         return err;
     }
 
