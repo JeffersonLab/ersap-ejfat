@@ -47,9 +47,11 @@ public class EjfatReasReader {
             dataBuffer.rewind();
 
             // read eventNumber
-            int evtNumber = Integer.reverseBytes(dataBuffer.getInt());
+//            int evtNumber = Integer.reverseBytes(dataBuffer.getInt());
+            int evtNumber = dataBuffer.getInt();
             // read event Length
-            int eventLength = Integer.reverseBytes(dataBuffer.getInt());
+//            int eventLength = Integer.reverseBytes(dataBuffer.getInt());
+            int eventLength = dataBuffer.getInt();
             System.out.println("EventNumber = " + evtNumber);
             System.out.println("EventLength = " + eventLength);
 
