@@ -2,4 +2,4 @@
 export CLASSPATH="$ERSAP_HOME/plugins/epsci/lib/*:$ERSAP_HOME/lib/*"
 #export JAVA_HOME=/home/gurjyan/jdk/jdk-11.0.13
 #export PATH=$JAVA_HOME/bin:$PATH
-exec java org.jlab.epsci.ersap.ejfat.io.alone.EjfatReasReader "$@"
+exec $JAVA_HOME/bin/java org.jlab.epsci.ersap.ejfat.io.alone.EjfatReasReader "$@"
