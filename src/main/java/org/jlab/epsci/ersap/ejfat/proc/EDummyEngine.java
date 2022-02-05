@@ -102,6 +102,5 @@ public class EDummyEngine implements Engine {
 
     @Override
     public void destroy() {
-
     }
 }
