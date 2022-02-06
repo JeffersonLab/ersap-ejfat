@@ -56,7 +56,7 @@ public class EjfatReasReader {
             System.out.println("EventLength = " + eventLength);
 
             // get HIPO event
-            byte[] payloadData = new byte[eventLength];
+            byte[] payloadData = new byte[bytes-8];
             dataBuffer.get(payloadData);
 
             File outputFile = new File("v.hipo");
