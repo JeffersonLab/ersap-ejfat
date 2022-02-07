@@ -8,7 +8,9 @@ import org.json.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
@@ -54,7 +56,12 @@ public class EEventWriter extends AbstractEventWriterService<FileWriter> {
         evtCount++;
         try {
             ByteBuffer b = (ByteBuffer)event;
+            b.rewind();
+            int evtNumber = b.getInt();
+            int length = b.getInt();
+            System.out.println("DDD;DEBUG eventNumber = "+evtNumber+" length = "+length +" bufferLength = "+ b.limit());
             writer.write(String.valueOf(b.array()));
+
             if (evtCount >= numFileEvents) {
                 System.out.println("DDD:Writer evtCount = " + evtCount +" "+ numFileEvents);
                 evtCount = 0;
