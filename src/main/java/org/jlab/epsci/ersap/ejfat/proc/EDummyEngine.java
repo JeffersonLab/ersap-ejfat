@@ -50,7 +50,7 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            int evtNumber = bb.getInt();
            int evtLength = bb.getInt();
-           System.out.println("in Java "+ evtNumber + " "+evtLength);
+           System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
        }
         try {
             Thread.sleep(delay * 1000L);
