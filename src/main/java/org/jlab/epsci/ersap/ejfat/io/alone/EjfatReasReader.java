@@ -56,6 +56,15 @@ public class EjfatReasReader {
                     + String.format("%x", hipoPointer)
                     + " HipoSize = " + hipoSize);
 
+            // get HIPO event
+//            byte[] payloadData = new byte[bytes-8];
+//            dataBuffer.get(payloadData);
+//
+//            File outputFile = new File("v.hipo");
+//            FileOutputStream outputStream = new FileOutputStream(outputFile);
+//            outputStream.write(payloadData);
+//            outputStream.close();
+
         } catch (
                 IOException e) {
             e.printStackTrace();
