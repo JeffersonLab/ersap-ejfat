@@ -77,9 +77,11 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             outBuffer.order(ByteOrder.LITTLE_ENDIAN);
             outBuffer.rewind();
 
-            int hipoPointer = Integer.reverseBytes(outBuffer.getInt());
-            int hipoSize = Integer.reverseBytes(outBuffer.getInt());
-            System.out.println("DDD:Reader hipoPoint = "+ hipoPointer + " HipoSize = "+hipoSize);
+            int hipoPointer = outBuffer.getInt();
+            int hipoSize = outBuffer.getInt();
+            System.out.println("DDD:Reader hipoPoint = "
+                    + String.format("%x", hipoPointer)
+                    + " HipoSize = " + String.format("%x",hipoSize));
 
             ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
                     .putInt(eventNumber) // tick
