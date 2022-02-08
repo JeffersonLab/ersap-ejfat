@@ -80,8 +80,8 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             int hipoPointer = outBuffer.getInt();
             int hipoSize = outBuffer.getInt();
             System.out.println("DDD:Reader hipoPoint = "
-                    + String.format("%x", hipoPointer)
-                    + " HipoSize = " + String.format("%x",hipoSize));
+                    + String.format("%x", hipoPointer,"US-ASCII")
+                    + " HipoSize = " + hipoSize);
 
             ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
                     .putInt(eventNumber) // tick
