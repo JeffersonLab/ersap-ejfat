@@ -48,12 +48,12 @@ public class EDummyEngine implements Engine {
        if ((i++ % pi) == 0) {
            ByteBuffer bb = (ByteBuffer)input.getData();
            bb.rewind();
-           int evtNumber = bb.getInt();
-           int evtLength = bb.getInt();
-           int hipoPointer = bb.getInt();
-           int hipoSize = bb.getInt();
-           System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
-           System.out.println("DDD:JavaProc hipoPoint = "+ hipoPointer + " HipoSize = "+hipoSize);
+//           int evtNumber = bb.getInt();
+//           int evtLength = bb.getInt();
+//           int hipoPointer = bb.getInt();
+//           int hipoSize = bb.getInt();
+//           System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
+//           System.out.println("DDD:JavaProc hipoPoint = "+ hipoPointer + " HipoSize = "+hipoSize);
        }
         try {
             Thread.sleep(delay);

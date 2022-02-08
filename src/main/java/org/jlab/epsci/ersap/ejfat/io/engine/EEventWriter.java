@@ -58,12 +58,12 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
         try {
             ByteBuffer bb = (ByteBuffer)event;
             bb.rewind();
-            int evtNumber = bb.getInt();
-            int evtLength = bb.getInt();
-            int hipoPointer = bb.getInt();
-            int hipoSize = bb.getInt();
-            System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
-            System.out.println("DDD:JavaProc hipoPoint = "+ hipoPointer + " HipoSize = "+hipoSize);
+//            int evtNumber = bb.getInt();
+//            int evtLength = bb.getInt();
+//            int hipoPointer = bb.getInt();
+//            int hipoSize = bb.getInt();
+//            System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
+//            System.out.println("DDD:JavaProc hipoPoint = "+ hipoPointer + " HipoSize = "+hipoSize);
 
             writer.write(bb.array());
 
