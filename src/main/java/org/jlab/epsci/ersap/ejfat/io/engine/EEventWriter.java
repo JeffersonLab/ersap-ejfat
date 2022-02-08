@@ -5,6 +5,7 @@ import org.jlab.epsci.ersap.std.services.AbstractEventWriterService;
 import org.jlab.epsci.ersap.std.services.EventWriterException;
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -23,7 +24,7 @@ import java.util.Optional;
  * @author gurjyan on 2/3/22
  * @project ersap-ejfat
  */
-public class EEventWriter extends AbstractEventWriterService<FileWriter> {
+public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
     private static final String FILE_EVENTS = "file-events";
     private int evtCount;
     private int fileCount = 1;
@@ -31,12 +32,12 @@ public class EEventWriter extends AbstractEventWriterService<FileWriter> {
     private Path file;
 
     @Override
-    protected FileWriter createWriter(Path file, JSONObject opts)
+    protected FileOutputStream createWriter(Path file, JSONObject opts)
             throws EventWriterException {
         numFileEvents = opts.has(FILE_EVENTS) ? opts.getInt(FILE_EVENTS) : 100000;
         this.file = file;
         try {
-            return new FileWriter(file.toString());
+            return new FileOutputStream(file.toString());
         } catch (IOException e) {
             throw new EventWriterException(e);
         }
@@ -55,18 +56,22 @@ public class EEventWriter extends AbstractEventWriterService<FileWriter> {
     protected void writeEvent(Object event) throws EventWriterException {
         evtCount++;
         try {
-            ByteBuffer b = (ByteBuffer)event;
-            b.rewind();
-            int evtNumber = b.getInt();
-            int length = b.getInt();
-            System.out.println("DDD;DEBUG eventNumber = "+evtNumber+" length = "+length +" bufferLength = "+ b.limit());
-            writer.write(String.valueOf(b.array()));
+            ByteBuffer bb = (ByteBuffer)event;
+            bb.rewind();
+            int evtNumber = bb.getInt();
+            int evtLength = bb.getInt();
+            int hipoPointer = bb.getInt();
+            int hipoSize = bb.getInt();
+            System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
+            System.out.println("DDD:JavaProc hipoPoint = "+ hipoPointer + " HipoSize = "+hipoSize);
+
+            writer.write(bb.array());
 
             if (evtCount >= numFileEvents) {
                 System.out.println("DDD:Writer evtCount = " + evtCount +" "+ numFileEvents);
                 evtCount = 0;
                 writer.close();
-                writer = new FileWriter(file.toString() + "_" + (fileCount++) +".ers");
+                writer = new FileOutputStream(file.toString() + "_" + (fileCount++) +".ers");
             }
         } catch (IOException e) {
             e.printStackTrace();

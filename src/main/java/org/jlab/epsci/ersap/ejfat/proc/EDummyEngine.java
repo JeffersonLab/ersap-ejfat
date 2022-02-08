@@ -50,10 +50,13 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            int evtNumber = bb.getInt();
            int evtLength = bb.getInt();
+           int hipoPointer = bb.getInt();
+           int hipoSize = bb.getInt();
            System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
+           System.out.println("DDD:JavaProc hipoPoint = "+ hipoPointer + " HipoSize = "+hipoSize);
        }
         try {
-            Thread.sleep(delay * 1000L);
+            Thread.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

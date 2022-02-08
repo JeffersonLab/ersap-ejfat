@@ -66,14 +66,17 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             Event event = new Event();
 
             reader.nextEvent(event);
-
-            ByteBuffer bb = event.getEventBuffer(); // actual data object
-            bb.rewind();
             int evtLength = event.getEventBufferSize();
-            ByteBuffer payload = ByteBuffer.allocate(bb.limit() + 8)
+
+            byte[] evt = new byte[evtLength];
+            ByteBuffer evtBuffer = ByteBuffer.wrap(evt);
+            evtBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            evtBuffer.rewind();
+
+            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
                     .putInt(eventNumber) // tick
                     .putInt(evtLength)  // length
-                    .put(bb);
+                    .put(evtBuffer);
 
             return payload;
         } catch (Exception e) {
