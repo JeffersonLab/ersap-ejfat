@@ -43,26 +43,18 @@ public class EjfatReasReader {
             System.out.println(bytes);
 
             dataBuffer = ByteBuffer.wrap(b);
-            dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
             dataBuffer.rewind();
 
-            // read eventNumber
-//            int evtNumber = Integer.reverseBytes(dataBuffer.getInt());
             int evtNumber = dataBuffer.getInt();
-            // read event Length
-//            int eventLength = Integer.reverseBytes(dataBuffer.getInt());
-            int eventLength = dataBuffer.getInt();
-            System.out.println("EventNumber = " + evtNumber);
-            System.out.println("EventLength = " + eventLength);
+            int evtLength = dataBuffer.getInt();
 
-            // get HIPO event
-            byte[] payloadData = new byte[bytes-8];
-            dataBuffer.get(payloadData);
-
-            File outputFile = new File("v.hipo");
-            FileOutputStream outputStream = new FileOutputStream(outputFile);
-            outputStream.write(payloadData);
-            outputStream.close();
+            dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            int hipoPointer = dataBuffer.getInt();
+            int hipoSize = dataBuffer.getInt();
+            System.out.println("DDD:Writer evtNumber = "+ evtNumber + " length = "+evtLength);
+            System.out.println("DDD:Writer hipoPoint = "
+                    + String.format("%x", hipoPointer)
+                    + " HipoSize = " + hipoSize);
 
         } catch (
                 IOException e) {
