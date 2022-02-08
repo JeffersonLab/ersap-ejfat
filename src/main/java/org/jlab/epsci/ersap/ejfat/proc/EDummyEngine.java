@@ -7,6 +7,7 @@ import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Set;
 
 /**
@@ -50,6 +51,9 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            int evtNumber = bb.getInt();
            int evtLength = bb.getInt();
+
+           bb.order(ByteOrder.LITTLE_ENDIAN);
+
            int hipoPointer = bb.getInt();
            int hipoSize = bb.getInt();
            System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
