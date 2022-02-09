@@ -77,6 +77,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             outBuffer.order(ByteOrder.LITTLE_ENDIAN);
             outBuffer.rewind();
 
+            // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
 //            int hipoPointer = outBuffer.getInt();
 //            int hipoSize = outBuffer.getInt();
 //            System.out.println("DDD:Reader hipoPoint = "

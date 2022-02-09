@@ -51,14 +51,14 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            int evtNumber = bb.getInt();
            int evtLength = bb.getInt();
-
-           bb.order(ByteOrder.LITTLE_ENDIAN);
-           int hipoPointer = bb.getInt();
-           int hipoSize = bb.getInt();
            System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
-           System.out.println("DDD:JavaProc hipoPoint = "
-                   + String.format("%x", hipoPointer)
-                   + " HipoSize = " + hipoSize);
+
+//           bb.order(ByteOrder.LITTLE_ENDIAN);
+//           int hipoPointer = bb.getInt();
+//           int hipoSize = bb.getInt();
+//           System.out.println("DDD:JavaProc hipoPoint = "
+//                   + String.format("%x", hipoPointer)
+//                   + " HipoSize = " + hipoSize);
        }
         try {
             Thread.sleep(delay);

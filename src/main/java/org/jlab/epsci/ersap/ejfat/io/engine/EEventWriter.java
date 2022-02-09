@@ -55,6 +55,8 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
 
     @Override
     protected void writeEvent(Object event) throws EventWriterException {
+        // This method will remove EJFAT 2 words tick/evtNumber and evtLength
+        // and write the pure h5 event to compare with the EJFAT reassembled event
         evtCount++;
         try {
             ByteBuffer bb = (ByteBuffer)event;
@@ -62,14 +64,6 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
             int evtNumber = bb.getInt();
             int evtLength = bb.getInt();
 //            System.out.println("DDD:Writer evtNumber = "+ evtNumber + " length = "+evtLength);
-
-//            bb.order(ByteOrder.LITTLE_ENDIAN);
-//            int hipoPointer = bb.getInt();
-//            int hipoSize = bb.getInt();
-//            System.out.println("DDD:Writer hipoPoint = "
-//                    + String.format("%x", hipoPointer)
-//                    + " HipoSize = " + hipoSize);
-            System.out.println("DDD ersap_event_size = "+ bb.limit()  +" h5_event_size = "+evtLength);
 
             byte[] payloadData = new byte[evtLength];
             bb.get(payloadData);
