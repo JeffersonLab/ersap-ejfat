@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
@@ -82,6 +83,8 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (BufferUnderflowException ee) {
+            ee.printStackTrace();
         }
 
     }
