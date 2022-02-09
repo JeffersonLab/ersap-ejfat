@@ -433,9 +433,11 @@ namespace ejfat {
 
         if (debug) fprintf(stderr, "Setting max UDP payload size to %d bytes, MTU = %d\n", maxUdpPayload, mtu);
 
-        return sendPacketizedBuffer(buffer, bufLen, maxUdpPayload, clientSocket, &serverAddr,
-                                    tick, protocol, version, dataId, &offset, delay,
+        int err = sendPacketizedBuffer(buffer, bufLen, maxUdpPayload, clientSocket, &serverAddr,
+                                      tick, protocol, version, dataId, &offset, delay,
                                    true, true, debug);
+        close(clientSocket);
+        return err;
     }
 
 }
