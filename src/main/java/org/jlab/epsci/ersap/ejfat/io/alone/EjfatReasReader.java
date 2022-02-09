@@ -44,26 +44,28 @@ public class EjfatReasReader {
 
             dataBuffer = ByteBuffer.wrap(b);
             dataBuffer.rewind();
+            File outputFile = new File("v_reassembled.h5");
+            FileOutputStream outputStream = new FileOutputStream(outputFile);
 
-            int evtNumber = dataBuffer.getInt();
-            int evtLength = dataBuffer.getInt();
+            while (dataBuffer.position() < dataBuffer.limit()) {
 
-            dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            int hipoPointer = dataBuffer.getInt();
-            int hipoSize = dataBuffer.getInt();
-            System.out.println("DDD:Writer evtNumber = "+ evtNumber + " length = "+evtLength);
-            System.out.println("DDD:Writer hipoPoint = "
-                    + String.format("%x", hipoPointer)
-                    + " HipoSize = " + hipoSize);
+                int evtNumber = dataBuffer.getInt();
+                int evtLength = dataBuffer.getInt();
 
-            // get HIPO event
-//            byte[] payloadData = new byte[bytes-8];
-//            dataBuffer.get(payloadData);
-//
-//            File outputFile = new File("v.hipo");
-//            FileOutputStream outputStream = new FileOutputStream(outputFile);
-//            outputStream.write(payloadData);
-//            outputStream.close();
+//                dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
+//                int hipoPointer = dataBuffer.getInt();
+//                int hipoSize = dataBuffer.getInt();
+                System.out.println("DDD:Writer evtNumber = " + evtNumber + " length = " + evtLength);
+//                System.out.println("DDD:Writer hipoPoint = "
+//                        + String.format("%x", hipoPointer)
+//                        + " HipoSize = " + hipoSize);
+
+                // get HIPO event
+                byte[] payloadData = new byte[bytes - 8];
+                dataBuffer.get(payloadData);
+                outputStream.write(payloadData);
+            }
+            outputStream.close();
 
         } catch (
                 IOException e) {
