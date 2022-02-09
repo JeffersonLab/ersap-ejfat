@@ -60,7 +60,7 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
             bb.rewind();
             int evtNumber = bb.getInt();
             int evtLength = bb.getInt();
-            System.out.println("DDD:Writer evtNumber = "+ evtNumber + " length = "+evtLength);
+//            System.out.println("DDD:Writer evtNumber = "+ evtNumber + " length = "+evtLength);
 
 //            bb.order(ByteOrder.LITTLE_ENDIAN);
 //            int hipoPointer = bb.getInt();
@@ -68,7 +68,7 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
 //            System.out.println("DDD:Writer hipoPoint = "
 //                    + String.format("%x", hipoPointer)
 //                    + " HipoSize = " + hipoSize);
-
+            System.out.println("DDD ersap_event_size = "+ bb.limit()  +" h5_event_size = "+evtLength);
             byte[] payloadData = new byte[evtLength];
             bb.get(payloadData);
             writer.write(payloadData);
