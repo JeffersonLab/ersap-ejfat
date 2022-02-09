@@ -61,7 +61,7 @@ public class EjfatReasReader {
 //                        + " HipoSize = " + hipoSize);
 
                 // get HIPO event
-                byte[] payloadData = new byte[bytes - 8];
+                byte[] payloadData = new byte[evtLength];
                 dataBuffer.get(payloadData);
                 outputStream.write(payloadData);
             }
