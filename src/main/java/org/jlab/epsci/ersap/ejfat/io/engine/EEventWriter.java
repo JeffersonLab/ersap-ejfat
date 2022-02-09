@@ -72,7 +72,8 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
             writer.write(bb.array());
 
             if (evtCount >= numFileEvents) {
-                System.out.println("DDD:Writer evtCount = " + evtCount +" "+ numFileEvents);
+                System.out.println("DDD:========================================= Closing file: evtCount = "
+                        + evtCount +" "+ numFileEvents);
                 evtCount = 0;
                 writer.close();
                 writer = new FileOutputStream(file.toString() + "_" + (fileCount++) +".ers");
