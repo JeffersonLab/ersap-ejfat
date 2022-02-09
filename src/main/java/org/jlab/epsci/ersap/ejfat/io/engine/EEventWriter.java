@@ -60,16 +60,18 @@ public class EEventWriter extends AbstractEventWriterService<FileOutputStream> {
             bb.rewind();
             int evtNumber = bb.getInt();
             int evtLength = bb.getInt();
-
-            bb.order(ByteOrder.LITTLE_ENDIAN);
-            int hipoPointer = bb.getInt();
-            int hipoSize = bb.getInt();
             System.out.println("DDD:Writer evtNumber = "+ evtNumber + " length = "+evtLength);
-            System.out.println("DDD:Writer hipoPoint = "
-                    + String.format("%x", hipoPointer)
-                    + " HipoSize = " + hipoSize);
 
-            writer.write(bb.array());
+//            bb.order(ByteOrder.LITTLE_ENDIAN);
+//            int hipoPointer = bb.getInt();
+//            int hipoSize = bb.getInt();
+//            System.out.println("DDD:Writer hipoPoint = "
+//                    + String.format("%x", hipoPointer)
+//                    + " HipoSize = " + hipoSize);
+
+            byte[] payloadData = new byte[evtLength];
+            bb.get(payloadData);
+            writer.write(payloadData);
 
             if (evtCount >= numFileEvents) {
                 System.out.println("DDD:========================================= Closing file: evtCount = "

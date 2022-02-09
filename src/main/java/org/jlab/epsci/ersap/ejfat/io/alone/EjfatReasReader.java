@@ -38,35 +38,19 @@ public class EjfatReasReader {
             // Read data into byte array
             int bytes = dataInputStream.read(b);
 
-            // Print number of bytes
-            // actually read
-            System.out.println(bytes);
-
             dataBuffer = ByteBuffer.wrap(b);
             dataBuffer.rewind();
-            File outputFile = new File("v_reassembled.h5");
-            FileOutputStream outputStream = new FileOutputStream(outputFile);
+            dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-            while (dataBuffer.position() < dataBuffer.limit()) {
+//            while (dataBuffer.position() < dataBuffer.limit()) {
 
-                int evtNumber = dataBuffer.getInt();
-                int evtLength = dataBuffer.getInt();
+                int hipoPointer = dataBuffer.getInt();
+                int hipoSize = dataBuffer.getInt();
+                System.out.println("DDD:Writer hipoPoint = "
+                        + String.format("%x", hipoPointer)
+                        + " HipoSize = " + hipoSize);
 
-//                dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
-//                int hipoPointer = dataBuffer.getInt();
-//                int hipoSize = dataBuffer.getInt();
-                System.out.println("DDD:Writer evtNumber = " + evtNumber + " length = " + evtLength);
-//                System.out.println("DDD:Writer hipoPoint = "
-//                        + String.format("%x", hipoPointer)
-//                        + " HipoSize = " + hipoSize);
-
-                // get HIPO event
-                byte[] payloadData = new byte[evtLength];
-                dataBuffer.get(payloadData);
-                outputStream.write(payloadData);
-            }
-            outputStream.close();
-
+//            }
         } catch (
                 IOException e) {
             e.printStackTrace();
