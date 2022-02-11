@@ -37,6 +37,13 @@ namespace ejfat {
         sock = nullptr;
     }
 
+    EjfatAssembleEngine::~EjfatAssembleEngine()
+    {
+        if (zmq) {
+            zmq_close(sock);
+        }
+    }
+
 
     /**
       * Create a zmq push socket to send data buffers to ERSAP back end.

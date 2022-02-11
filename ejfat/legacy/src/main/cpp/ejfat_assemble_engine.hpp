@@ -11,7 +11,8 @@ class EjfatAssembleEngine
 {
 public:
 
-    EjfatAssembleEngine();
+     EjfatAssembleEngine();
+    ~EjfatAssembleEngine();
 
     void process(char **userBuf, size_t *userBufLen,
                  uint16_t port, const char *listeningAddr,
