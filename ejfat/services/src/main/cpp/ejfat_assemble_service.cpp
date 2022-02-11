@@ -75,7 +75,7 @@ ersap::EngineData EjfatAssembleService::execute(ersap::EngineData& input)
     char *buf;
     size_t bufLen;
     // Create a buffer for us
-    bool noCopy = true;
+    bool noCopy = false;
 
     // This always loads the shared_pointer into a new shared_ptr
     std::atomic_load(&engine_)->process(&buf, &bufLen, port, interface.c_str(), noCopy);
