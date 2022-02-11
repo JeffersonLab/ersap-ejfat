@@ -14,9 +14,10 @@ services:
   - class: ejfat_packetize_service
     name: EjfatPacketizeService
     lang: cpp
-  - class: ejfat_assemble_service
-    name: EjfatAssembleService
-    lang: cpp
+#  This engine cannot be part of the ERSAP
+#  - class: ejfat_assemble_service
+#    name: EjfatAssembleService
+#    lang: cpp
 configuration:
   io-services:
     writer:
@@ -33,7 +34,7 @@ configuration:
       version: 1
       dataId: 1
       delay: 12
-    EjfatAssembleService:
-      zmq: on
+#    EjfatAssembleService:
+#      zmq: on
 mime-types:
   - binary/bytes
