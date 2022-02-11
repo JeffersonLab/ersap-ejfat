@@ -2,6 +2,7 @@
 #define ERSAP_EJFAT_ASSEMBLE_ENGINE_HPP_
 
 #include <string>
+#include <zmq.h>
 
 namespace ersap {
 namespace ejfat {
@@ -13,17 +14,25 @@ public:
     EjfatAssembleEngine();
 
     void process(char **userBuf, size_t *userBufLen,
-                 unsigned short port, const char *listeningAddr,
+                 uint16_t port, const char *listeningAddr,
                  bool noCopy);
 
     void parseConfigFile();
 
+    int createZmqSocket();
+
 private:
 
     std::string interface;
-    int port;
+    uint16_t port;
     bool debug;
+    bool zmq;  // if true, send data over zmq
 
+    // Zmq context, socket, dest addr & port
+    void *ctx;
+    void *sock;
+    std::string destIP;
+    uint16_t destPort;
 };
 
 } // end namespace ejfat
