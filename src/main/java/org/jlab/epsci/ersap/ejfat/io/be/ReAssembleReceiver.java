@@ -68,9 +68,10 @@ public class ReAssembleReceiver extends Thread {
                 // get the size of the reassembled event
                 short sz = dataInputStream.readShort();
                 int size = Short.toUnsignedInt(sz);
-                String.format("DDD size = %02X", size);
+                System.out.println(String.format("DDD size = %02X", size) + "  " + size );
                 byte[] payload = new byte[size];
                 dataInputStream.readFully(payload);
+                System.out.println("blob size = " + payload.length);
                 event.setPayload(payload);
 
                 // Make the buffer available for consumers
