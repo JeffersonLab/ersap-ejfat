@@ -1,0 +1,23 @@
+---
+io-services:
+  reader:
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EjfatReaderEngine
+    name: EjfatSource
+  writer:
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EEventWriter
+    name: EEventWriter
+services:
+  - class: org.jlab.epsci.ersap.ejfat.proc.EDummyEngine
+    name: DummyEngine
+configuration:
+  io-services:
+    reader:
+      port: 6000
+    writer:
+      file-events: 10000
+  services:
+    DummyEngine:
+      print-interval: 1000
+      delay: 0
+mime-types:
+  - binary/bytes

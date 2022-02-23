@@ -1,4 +1,4 @@
-package org.jlab.epsci.ersap.ejfat.io.alone;
+package org.jlab.epsci.ersap.ejfat.io.fe;
 
 /**
  * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.

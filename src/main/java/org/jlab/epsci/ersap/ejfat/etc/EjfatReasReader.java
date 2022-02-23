@@ -1,4 +1,4 @@
-package org.jlab.epsci.ersap.ejfat.io.alone;
+package org.jlab.epsci.ersap.ejfat.etc;
 
 import java.io.*;
 import java.nio.ByteBuffer;
