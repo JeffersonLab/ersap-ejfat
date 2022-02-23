@@ -51,9 +51,9 @@ public class ReAssembleReceiver extends Thread {
         super.run();
         try {
             serverSocket = new ServerSocket(ejfatPort);
-            System.out.println("ERSAP is listening on port " + ejfatPort);
+            System.out.println("INFO ERSAP is listening on port " + ejfatPort);
             Socket socket = serverSocket.accept();
-            System.out.println("EJFAT client connected");
+            System.out.println("INFO EJFAT client connected");
             InputStream input = socket.getInputStream();
             dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
         } catch (
