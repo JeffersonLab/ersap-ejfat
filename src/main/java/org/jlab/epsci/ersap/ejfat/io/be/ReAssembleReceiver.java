@@ -66,7 +66,7 @@ public class ReAssembleReceiver extends Thread {
                 RingEjfatEvent event = get();
 
                 // get the size of the reassembled event
-                int size = dataInputStream.readInt();
+                short size = dataInputStream.readShort();
                 byte[] payload = new byte[size];
                 dataInputStream.readFully(payload);
                 event.setPayload(payload);
