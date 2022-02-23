@@ -69,7 +69,7 @@ public class ReAssembleReceiver extends Thread {
                 short sz = dataInputStream.readShort();
                 short szz = Short.reverseBytes(sz);
                 int size = Short.toUnsignedInt(szz);
-                System.out.println(String.format("DDD size = %02X", size) + "  " + size +" " + szz );
+                System.out.println(String.format("DDD size = %02X", size) + " int = " + size +" short = " + szz );
                 byte[] payload = new byte[size];
                 dataInputStream.readFully(payload);
                 System.out.println("blob size = " + payload.length);
