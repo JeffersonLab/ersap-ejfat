@@ -64,7 +64,7 @@ public class ReAssembleReceiver extends Thread {
             try {
                 // Get an empty item from ring
                 RingEjfatEvent event = get();
-
+                System.out.println(" ================");
                 // get the size of the reassembled event
                 short sz = dataInputStream.readShort();
                 short szz = Short.reverseBytes(sz);
