@@ -47,7 +47,7 @@ public class EDummyEngine implements Engine {
             }
         }
         timer = new Timer();
-        timer.schedule(new PrintRates(), 0, 10000);
+        timer.schedule(new PrintRates(), 0, 1000);
         return null;
     }
 
@@ -123,7 +123,7 @@ public class EDummyEngine implements Engine {
 
         @Override
         public void run() {
-            System.out.println(" rate = " +i/10000 +" Hz");
+            System.out.println("EventRate = " +i/1000L +" Hz");
             i = 0;
         }
     }
