@@ -18,11 +18,10 @@ import java.util.Set;
  * 12000, Jefferson Ave, Newport News, VA 23606
  * Phone : (757)-269-7100
  *
- * @author gurjyan on 1/26/22
+ * @author gurjyan on 2/25/22
  * @project ersap-ejfat
  */
-
-public class EDummyEngine implements Engine {
+public class EDummyEngineBE implements Engine {
     int i;
     private static final String PRINT_INTERVAL = "print-interval";
     private static final String DELAY = "delay";
@@ -46,20 +45,16 @@ public class EDummyEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-       if ((i++ % pi) == 0) {
-           ByteBuffer bb = (ByteBuffer)input.getData();
-           bb.rewind();
-           int evtNumber = bb.getInt();
-           int evtLength = bb.getInt();
-           System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
-
-           bb.order(ByteOrder.LITTLE_ENDIAN);
-           int hipoPointer = bb.getInt();
-           int hipoSize = bb.getInt();
-           System.out.println("DDD:JavaProc hipoPoint = "
-                   + String.format("%x", hipoPointer)
-                   + " HipoSize = " + hipoSize);
-       }
+        if ((i++ % pi) == 0) {
+            ByteBuffer bb = (ByteBuffer)input.getData();
+            bb.order(ByteOrder.LITTLE_ENDIAN);
+            bb.rewind();
+            int hipoPointer = bb.getInt();
+            int hipoSize = bb.getInt();
+            System.out.println("DDD:JavaProc hipoPoint = "
+                    + String.format("%x", hipoPointer)
+                    + " HipoSize = " + hipoSize);
+        }
         try {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
@@ -91,7 +86,7 @@ public class EDummyEngine implements Engine {
 
     @Override
     public String getDescription() {
-        return "Dummy engine for the EJFAT ERSAP front-end.";
+        return "Dummy engine for the EJFAT ERSAP back-end.";
     }
 
     @Override

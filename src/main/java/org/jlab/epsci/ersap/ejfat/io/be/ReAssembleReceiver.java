@@ -64,16 +64,16 @@ public class ReAssembleReceiver extends Thread {
             try {
                 // Get an empty item from ring
                 RingEjfatEvent event = get();
-                System.out.println(" ================");
                 // get the size of the reassembled event
-                short sz = dataInputStream.readShort();
-                short szz = Short.reverseBytes(sz);
-                int size = Short.toUnsignedInt(szz);
-                System.out.println(String.format("DDD size = %02X", size) + " int = " + size +" short = " + szz );
+                short sz = Short.reverseBytes(dataInputStream.readShort());
+                int size = Short.toUnsignedInt(sz);
                 byte[] payload = new byte[size];
                 dataInputStream.readFully(payload);
-                System.out.println("blob size = " + payload.length);
                 event.setPayload(payload);
+
+//                System.out.println(" ================");
+//                System.out.println(String.format("DDD size = %02X", size) + " int = " + size);
+//                System.out.println("blob size = " + payload.length);
 
                 // Make the buffer available for consumers
                 publish();
