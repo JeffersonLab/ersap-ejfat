@@ -101,8 +101,8 @@ private int evt;
                     .putInt(eventNumber) //tick
                     .putInt(evtLength) // length
                     .put(outBuffer);
-//            return payload;
-            return event.getEventBuffer();
+            return payload;
+//            return event.getEventBuffer();
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
