@@ -11,13 +11,17 @@
  */
 package org.jlab.epsci.ersap.ejfat.io.engine;
 
+//import j4np.utils.FileUtils;
+import j4np.hipo5.data.Event;
+import j4np.hipo5.io.HipoWriter;
+import j4np.utils.FileUtils;
 import org.jlab.epsci.ersap.ejfat.io.Clas12Types;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventWriterService;
 import org.jlab.epsci.ersap.std.services.EventWriterException;
+//import org.jlab.jnp.hipo.data.HipoEvent;
+//import org.jlab.jnp.hipo.io.HipoWriter;
 import org.jlab.jnp.hipo.data.HipoEvent;
-import org.jlab.jnp.hipo.io.HipoWriter;
-import org.jlab.jnp.utils.file.FileUtils;
 import org.json.JSONObject;
 
 import java.nio.file.Path;
@@ -63,7 +67,8 @@ public class EClas12HipoWriter extends AbstractEventWriterService<HipoWriter> {
     @Override
     protected void writeEvent(Object event) throws EventWriterException {
         try {
-            writer.writeEvent((HipoEvent) event);
+            writer.addEvent((Event)event);
+//            writer.writeEvent((HipoEvent) event);
         } catch (Exception e) {
             throw new EventWriterException(e);
         }
