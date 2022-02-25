@@ -28,9 +28,6 @@ import java.util.TimerTask;
  * events to ERSAP microservices down the data pipeline.
  */
 public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
-    // Timer for measuring and printing statistics.
-    Timer timer;
-    int evtNumber;
 
     @Override
     protected HipoReader createReader(Path file, JSONObject opts)
@@ -38,10 +35,6 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
         try {
             HipoReader reader = new HipoReader();
             reader.open(file.toString());
-
-            timer = new Timer();
-            timer.schedule(new PrintRates(), 0, 10000);
-
             return reader;
         } catch (Exception e) {
             throw new EventReaderException(e);
@@ -73,7 +66,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
      */
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
-    evtNumber++;
+        System.out.printf("event = "+eventNumber);
         try {
             Event event = new Event();
             reader.getEvent(event,eventNumber);
@@ -112,14 +105,5 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     protected EngineDataType getDataType() {
 //        return Clas12Types.HIPO;
         return EngineDataType.BYTES;
-    }
-    private class PrintRates extends TimerTask {
-
-        @Override
-        public void run() {
-            System.out.println("Events = " +evtNumber);
-//            System.out.println("EventRate = " +evtNumber/1000F +" Hz");
-            evtNumber = 0;
-        }
     }
 }
