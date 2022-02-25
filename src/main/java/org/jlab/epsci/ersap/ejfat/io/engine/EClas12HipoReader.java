@@ -65,51 +65,34 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
-
+            System.out.println(eventNumber);
             Event event = new Event();
-
-//            reader.getEvent(event,eventNumber);
-            reader.nextEvent(event);
-
-            int evtLength = event.getEventBufferSize();
-
-
-            ByteBuffer eventBuffer = event.getEventBuffer();
-            eventBuffer.rewind();
-
-
+//            reader.nextEvent(event);
+//            int evtLength = event.getEventBufferSize();
+//
+//            ByteBuffer eventBuffer = event.getEventBuffer();
+//            eventBuffer.rewind();
+//
 //            byte[] evt = new byte[evtLength];
 //            eventBuffer.get(evt);
-
+//
 //            ByteBuffer outBuffer = ByteBuffer.wrap(evt);
 //            outBuffer.order(ByteOrder.LITTLE_ENDIAN);
 //            outBuffer.rewind();
-
-            // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
-//            int hipoPointer = outBuffer.getInt();
-//            int hipoSize = outBuffer.getInt();
-//            System.out.println("DDD:Reader hipoPoint = "
-//                    + String.format("%x", hipoPointer)
-//                    + " HipoSize = " + hipoSize);
-
-            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8);
-
-            payload.putInt(eventNumber); // tick
-
-            payload.putInt(evtLength);  // length
-            System.out.println("hey 8... ");
-
+//
+//            // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
+////            int hipoPointer = outBuffer.getInt();
+////            int hipoSize = outBuffer.getInt();
+////            System.out.println("DDD:Reader hipoPoint = "
+////                    + String.format("%x", hipoPointer)
+////                    + " HipoSize = " + hipoSize);
+//
+//            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
+//                    .putInt(eventNumber) //tick
+//                    .putInt(evtLength) // length
 //                    .put(outBuffer);
-//                    payload.put(eventBuffer);
-            while (eventBuffer.hasRemaining()) {
-                System.out.println( "koko");
-                payload.put(eventBuffer.get());
-            }
-
-            System.out.println("hey 9...");
-            System.out.println("hey...");
-
-            return payload;
+//            return payload;
+             return event;
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
