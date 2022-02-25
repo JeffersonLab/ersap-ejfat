@@ -107,10 +107,10 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             System.out.println("hey 8... ");
 
 //                    .put(outBuffer);
-                    payload.put(eventBuffer);
+//                    payload.put(eventBuffer);
             System.out.println("hey 9...");
-
             System.out.println("hey...");
+
             return payload;
         } catch (Exception e) {
             throw new EventReaderException(e);
