@@ -19,7 +19,7 @@ configuration:
       file-events: 10000
   services:
     DummyEngine:
-      print-interval: 1000
+      print-interval: 1
       delay: 0
 mime-types:
   - binary/bytes
