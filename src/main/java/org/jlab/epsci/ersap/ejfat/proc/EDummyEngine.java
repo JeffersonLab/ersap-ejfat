@@ -52,17 +52,13 @@ public class EDummyEngine implements Engine {
            bb.rewind();
            int evtNumber = bb.getInt();
            int evtLength = bb.getInt();
-//           System.out.println("DDD:JavaProc evtNumber = "+ evtNumber + " length = "+evtLength);
-
            bb.order(ByteOrder.LITTLE_ENDIAN);
 
-           BeUtil.dump(evtNumber, bb);
-//           int hipoPointer = bb.getInt();
-//           int hipoSize = bb.getInt();
-//           System.out.println("DDD:JavaProc hipoPoint = "
-//                   + String.format("%x", hipoPointer)
-//                   + " HipoSize = " + hipoSize);
-//
+           int hipoPointer = bb.getInt();
+           int hipoSize = bb.getInt();
+           System.out.println("DDD: EventNumber = " + evtNumber
+                   + " HIPO_Magic = " + String.format("%x", hipoPointer)
+                   + " HIPO_Size = " + hipoSize);
            bb.order(ByteOrder.BIG_ENDIAN);
        }
         try {
