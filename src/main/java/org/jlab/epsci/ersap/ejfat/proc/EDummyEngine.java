@@ -46,6 +46,7 @@ public class EDummyEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
+        System.out.println("hoppa ....");
        if ((i++ % pi) == 0) {
            ByteBuffer bb = (ByteBuffer)input.getData();
            bb.rewind();
