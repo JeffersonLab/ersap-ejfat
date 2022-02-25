@@ -65,23 +65,18 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
-            System.out.println("hey 1...");
 
             Event event = new Event();
-            System.out.println("hey 2...");
 
 //            reader.getEvent(event,eventNumber);
             reader.nextEvent(event);
-            System.out.println("hey 3...");
 
             int evtLength = event.getEventBufferSize();
-            System.out.println("hey 4... " +evtLength);
 
 
             ByteBuffer eventBuffer = event.getEventBuffer();
             eventBuffer.rewind();
 
-            System.out.println("hey 5... " + eventBuffer.limit());
 
 //            byte[] evt = new byte[evtLength];
 //            eventBuffer.get(evt);
@@ -98,10 +93,8 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 //                    + " HipoSize = " + hipoSize);
 
             ByteBuffer payload = ByteBuffer.allocate(evtLength + 8);
-            System.out.println("hey 6...");
 
             payload.putInt(eventNumber); // tick
-            System.out.println("hey 7...");
 
             payload.putInt(evtLength);  // length
             System.out.println("hey 8... ");
