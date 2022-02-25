@@ -1,0 +1,11 @@
+---
+name: EClas12HipoWriter
+engine: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoWriter
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  Writes serialized HIPO event.
