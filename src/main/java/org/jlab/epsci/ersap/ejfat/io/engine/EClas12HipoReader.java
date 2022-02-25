@@ -100,7 +100,7 @@ private int evt;
 //                    .putInt(evtLength) // length
 //                    .put(outBuffer);
 //            return payload;
-            return event;
+            return event.getEventBuffer();
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
