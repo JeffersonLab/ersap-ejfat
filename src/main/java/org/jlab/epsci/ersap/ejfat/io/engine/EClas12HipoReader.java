@@ -95,11 +95,19 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 //                    + String.format("%x", hipoPointer)
 //                    + " HipoSize = " + hipoSize);
 
-            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
-                    .putInt(eventNumber) // tick
-                    .putInt(evtLength)  // length
+            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8);
+            System.out.println("hey 6...");
+
+            payload.putInt(eventNumber); // tick
+            System.out.println("hey 7...");
+
+            payload.putInt(evtLength);  // length
+            System.out.println("hey 8...");
+
 //                    .put(outBuffer);
-                    .put(eventBuffer);
+                    payload.put(eventBuffer);
+            System.out.println("hey 9...");
+
             System.out.println("hey...");
             return payload;
         } catch (Exception e) {
