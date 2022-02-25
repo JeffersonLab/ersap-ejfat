@@ -18,7 +18,7 @@ import static com.lmax.disruptor.RingBuffer.createSingleProducer;
  * @project ersap-ejfat
  */
 public class EjfatReader {
-    private final static int maxRingItems = 32768;
+    private final static int maxRingItems = 4;
 
     private RingBuffer<RingEjfatEvent> ringBuffer;
     private Sequence sequence;
