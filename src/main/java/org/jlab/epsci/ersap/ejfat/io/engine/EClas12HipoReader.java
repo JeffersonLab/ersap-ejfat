@@ -13,7 +13,6 @@ package org.jlab.epsci.ersap.ejfat.io.engine;
 
 import j4np.hipo5.data.Event;
 import j4np.hipo5.io.HipoReader;
-import org.jlab.epsci.ersap.ejfat.proc.EDummyEngine;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
@@ -77,18 +76,18 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     evtNumber++;
         try {
             Event event = new Event();
+            reader.getEvent(event,eventNumber);
 
-            reader.nextEvent(event);
             int evtLength = event.getEventBufferSize();
 
             ByteBuffer eventBuffer = event.getEventBuffer();
 
-            byte[] evt = new byte[evtLength];
-            eventBuffer.get(evt);
+//            byte[] evt = new byte[evtLength];
+//            eventBuffer.get(evt);
 
-            ByteBuffer outBuffer = ByteBuffer.wrap(evt);
-            outBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            outBuffer.rewind();
+//            ByteBuffer outBuffer = ByteBuffer.wrap(evt);
+//            outBuffer.order(ByteOrder.LITTLE_ENDIAN);
+//            outBuffer.rewind();
 
             // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
 //            int hipoPointer = outBuffer.getInt();
@@ -100,7 +99,8 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
                     .putInt(eventNumber) // tick
                     .putInt(evtLength)  // length
-                    .put(outBuffer);
+//                    .put(outBuffer);
+                    .put(eventBuffer);
 
             return payload;
         } catch (Exception e) {
