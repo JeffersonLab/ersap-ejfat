@@ -115,7 +115,7 @@ private int evt;
     private class PrintRates extends TimerTask {
         @Override
         public void run() {
-            System.out.println("evtRate = "+ evt/1000F);
+            System.out.println("evtRate = "+ evt);
             evt = 0;
         }
     }
