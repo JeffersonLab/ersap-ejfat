@@ -117,7 +117,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
         @Override
         public void run() {
-            System.out.println("EventRate = " +evtNumber/1000L +" Hz");
+            System.out.println("EventRate = " +evtNumber/1000F +" Hz");
             evtNumber = 0;
         }
     }
