@@ -20,8 +20,6 @@ import org.json.JSONObject;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Reads CLAS12 decoded HIPO files and streams build
@@ -67,13 +65,21 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
+            System.out.println("hey 1...");
+
             Event event = new Event();
+            System.out.println("hey 2...");
+
 //            reader.getEvent(event,eventNumber);
             reader.nextEvent(event);
+            System.out.println("hey 3...");
 
             int evtLength = event.getEventBufferSize();
+            System.out.println("hey 4...");
+
 
             ByteBuffer eventBuffer = event.getEventBuffer();
+            System.out.println("hey 5...");
 
 //            byte[] evt = new byte[evtLength];
 //            eventBuffer.get(evt);
