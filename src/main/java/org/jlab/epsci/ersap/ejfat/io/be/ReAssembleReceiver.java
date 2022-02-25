@@ -71,7 +71,7 @@ public class ReAssembleReceiver extends Thread {
                 dataInputStream.readFully(payload);
                 event.setPayload(payload);
 
-                BeUtil.dump(event.getPayloadBuffer());
+//                BeUtil.dump(event.getPayloadBuffer());
 
 //                System.out.println(" ================");
 //                System.out.println(String.format("DDD size = %02X", size) + " int = " + size);

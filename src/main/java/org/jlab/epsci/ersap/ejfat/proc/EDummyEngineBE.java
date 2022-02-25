@@ -47,7 +47,7 @@ public class EDummyEngineBE implements Engine {
     @Override
     public EngineData execute(EngineData input) {
         if ((i++ % pi) == 0) {
-//            BeUtil.dump((ByteBuffer)input.getData());
+            BeUtil.dump((ByteBuffer)input.getData());
         }
         try {
             Thread.sleep(delay);
