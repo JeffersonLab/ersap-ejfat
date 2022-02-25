@@ -21,7 +21,7 @@ public class BeUtil {
         int hipoPointer = bb.getInt();
         int hipoSize = bb.getInt();
         System.out.println("DDD: EventNumber = " + evtNumber
-                + " HIPOMagic = " + String.format("%x", hipoPointer)
-                + " HIPOSize = " + hipoSize);
+                + " HIPO_Magic = " + String.format("%x", hipoPointer)
+                + " HIPO_Size = " + hipoSize);
     }
 }

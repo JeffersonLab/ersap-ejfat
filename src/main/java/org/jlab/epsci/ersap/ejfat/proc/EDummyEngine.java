@@ -63,7 +63,7 @@ public class EDummyEngine implements Engine {
 //                   + String.format("%x", hipoPointer)
 //                   + " HipoSize = " + hipoSize);
 //
-//           bb.order(ByteOrder.BIG_ENDIAN);
+           bb.order(ByteOrder.BIG_ENDIAN);
        }
         try {
             Thread.sleep(delay);
