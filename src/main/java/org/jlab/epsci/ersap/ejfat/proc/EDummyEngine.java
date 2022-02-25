@@ -59,6 +59,7 @@ public class EDummyEngine implements Engine {
            System.out.println("DDD:JavaProc hipoPoint = "
                    + String.format("%x", hipoPointer)
                    + " HipoSize = " + hipoSize);
+           bb.order(ByteOrder.BIG_ENDIAN);
        }
         try {
             Thread.sleep(delay);
@@ -91,7 +92,7 @@ public class EDummyEngine implements Engine {
 
     @Override
     public String getDescription() {
-        return "Dummy engine for the EJFAT ERSAP front-end.";
+        return "Dummy engine.";
     }
 
     @Override
