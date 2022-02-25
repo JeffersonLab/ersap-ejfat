@@ -17,6 +17,8 @@ import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
 import org.json.JSONObject;
+
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.util.Timer;
@@ -75,30 +77,30 @@ private int evt;
         try {
             evt++;
             Event event = new Event();
-//            reader.nextEvent(event);
-//            int evtLength = event.getEventBufferSize();
-//
-//            ByteBuffer eventBuffer = event.getEventBuffer();
-//            eventBuffer.rewind();
-//
-//            byte[] evt = new byte[evtLength];
-//            eventBuffer.get(evt);
-//
-//            ByteBuffer outBuffer = ByteBuffer.wrap(evt);
-//            outBuffer.order(ByteOrder.LITTLE_ENDIAN);
-//            outBuffer.rewind();
-//
-//            // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
-////            int hipoPointer = outBuffer.getInt();
-////            int hipoSize = outBuffer.getInt();
-////            System.out.println("DDD:Reader hipoPoint = "
-////                    + String.format("%x", hipoPointer)
-////                    + " HipoSize = " + hipoSize);
-//
-//            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
-//                    .putInt(eventNumber) //tick
-//                    .putInt(evtLength) // length
-//                    .put(outBuffer);
+            reader.nextEvent(event);
+            int evtLength = event.getEventBufferSize();
+
+            ByteBuffer eventBuffer = event.getEventBuffer();
+            eventBuffer.rewind();
+
+            byte[] evt = new byte[evtLength];
+            eventBuffer.get(evt);
+
+            ByteBuffer outBuffer = ByteBuffer.wrap(evt);
+            outBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            outBuffer.rewind();
+
+            // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
+//            int hipoPointer = outBuffer.getInt();
+//            int hipoSize = outBuffer.getInt();
+//            System.out.println("DDD:Reader hipoPoint = "
+//                    + String.format("%x", hipoPointer)
+//                    + " HipoSize = " + hipoSize);
+
+            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
+                    .putInt(eventNumber) //tick
+                    .putInt(evtLength) // length
+                    .put(outBuffer);
 //            return payload;
             return event.getEventBuffer();
         } catch (Exception e) {
@@ -115,7 +117,7 @@ private int evt;
     private class PrintRates extends TimerTask {
         @Override
         public void run() {
-            System.out.println("evtRate = "+ evt);
+            System.out.println("evtRate = "+ evt + "Hz");
             evt = 0;
         }
     }
