@@ -66,7 +66,6 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
      */
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
-        System.out.printf("event = "+eventNumber);
         try {
             Event event = new Event();
             reader.getEvent(event,eventNumber);

@@ -46,25 +46,25 @@ public class EDummyEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-//       if ((i++ % pi) == 0) {
-//           ByteBuffer bb = (ByteBuffer)input.getData();
-//           bb.rewind();
-//           int evtNumber = bb.getInt();
-//           int evtLength = bb.getInt();
-//           bb.order(ByteOrder.LITTLE_ENDIAN);
-//
-//           int hipoPointer = bb.getInt();
-//           int hipoSize = bb.getInt();
-//           System.out.println("DDD: EventNumber = " + evtNumber
-//                   + " HIPO_Magic = " + String.format("%x", hipoPointer)
-//                   + " HIPO_Size = " + hipoSize);
-//           bb.order(ByteOrder.BIG_ENDIAN);
-//       }
-//        try {
-//            Thread.sleep(delay);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+       if ((i++ % pi) == 0) {
+           ByteBuffer bb = (ByteBuffer)input.getData();
+           bb.rewind();
+           int evtNumber = bb.getInt();
+           int evtLength = bb.getInt();
+           bb.order(ByteOrder.LITTLE_ENDIAN);
+
+           int hipoPointer = bb.getInt();
+           int hipoSize = bb.getInt();
+           System.out.println("DDD: EventNumber = " + evtNumber
+                   + " HIPO_Magic = " + String.format("%x", hipoPointer)
+                   + " HIPO_Size = " + hipoSize);
+           bb.order(ByteOrder.BIG_ENDIAN);
+       }
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return input;
     }
 
