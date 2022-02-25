@@ -1,6 +1,7 @@
 package org.jlab.epsci.ersap.ejfat.proc;
 
 import org.jlab.epsci.ersap.base.ErsapUtil;
+import org.jlab.epsci.ersap.ejfat.io.be.BeUtil;
 import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
@@ -46,14 +47,7 @@ public class EDummyEngineBE implements Engine {
     @Override
     public EngineData execute(EngineData input) {
         if ((i++ % pi) == 0) {
-            ByteBuffer bb = (ByteBuffer)input.getData();
-            bb.order(ByteOrder.LITTLE_ENDIAN);
-            bb.rewind();
-            int hipoPointer = bb.getInt();
-            int hipoSize = bb.getInt();
-            System.out.println("DDD:JavaProc hipoPoint = "
-                    + String.format("%x", hipoPointer)
-                    + " HipoSize = " + hipoSize);
+//            BeUtil.dump((ByteBuffer)input.getData());
         }
         try {
             Thread.sleep(delay);
