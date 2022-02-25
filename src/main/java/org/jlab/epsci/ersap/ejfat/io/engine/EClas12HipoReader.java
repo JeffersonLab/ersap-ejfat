@@ -13,6 +13,7 @@ package org.jlab.epsci.ersap.ejfat.io.engine;
 
 import j4np.hipo5.data.Event;
 import j4np.hipo5.io.HipoReader;
+import org.jlab.epsci.ersap.ejfat.proc.EDummyEngine;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
@@ -20,22 +21,33 @@ import org.json.JSONObject;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Reads CLAS12 decoded HIPO files and streams build
  * events to ERSAP microservices down the data pipeline.
  */
 public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
+    // Timer for measuring and printing statistics.
+    Timer timer;
+    int evtNumber;
+
     @Override
     protected HipoReader createReader(Path file, JSONObject opts)
             throws EventReaderException {
         try {
             HipoReader reader = new HipoReader();
             reader.open(file.toString());
+
+            timer = new Timer();
+            timer.schedule(new PrintRates(), 0, 1000);
+
             return reader;
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
+
     }
 
     @Override
@@ -62,6 +74,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
      */
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
+    evtNumber++;
         try {
             Event event = new Event();
 
@@ -100,5 +113,12 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 //        return Clas12Types.HIPO;
         return EngineDataType.BYTES;
     }
+    private class PrintRates extends TimerTask {
 
+        @Override
+        public void run() {
+            System.out.println("EventRate = " +evtNumber/1000L +" Hz");
+            evtNumber = 0;
+        }
+    }
 }

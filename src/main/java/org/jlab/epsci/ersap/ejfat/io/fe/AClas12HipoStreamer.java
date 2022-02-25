@@ -13,6 +13,7 @@ package org.jlab.epsci.ersap.ejfat.io.fe;
  */
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jlab.coda.hipo.HipoException;

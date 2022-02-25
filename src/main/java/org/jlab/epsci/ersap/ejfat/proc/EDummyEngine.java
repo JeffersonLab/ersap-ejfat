@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
@@ -31,9 +29,6 @@ public class EDummyEngine implements Engine {
     private int pi;
     private int delay;
 
-    // Timer for measuring and printing statistics.
-    Timer timer;
-
     @Override
     public EngineData configure(EngineData input) {
         if (input.getMimeType().equalsIgnoreCase(EngineDataType.JSON.mimeType())) {
@@ -46,8 +41,6 @@ public class EDummyEngine implements Engine {
                 delay = data.getInt(DELAY);
             }
         }
-        timer = new Timer();
-        timer.schedule(new PrintRates(), 0, 1000);
         return null;
     }
 
@@ -119,12 +112,5 @@ public class EDummyEngine implements Engine {
     public void destroy() {
     }
 
-    private class PrintRates extends TimerTask {
 
-        @Override
-        public void run() {
-            System.out.println("EventRate = " +i/1000L +" Hz");
-            i = 0;
-        }
-    }
 }
