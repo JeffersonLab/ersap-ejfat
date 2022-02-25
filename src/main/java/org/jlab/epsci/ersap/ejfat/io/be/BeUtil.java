@@ -15,13 +15,13 @@ import java.nio.ByteOrder;
  * @project ersap-ejfat
  */
 public class BeUtil {
-    public static void dump (ByteBuffer bb){
+    public static void dump (int evtNumber, ByteBuffer bb){
         bb.order(ByteOrder.LITTLE_ENDIAN);
         bb.rewind();
         int hipoPointer = bb.getInt();
         int hipoSize = bb.getInt();
-        System.out.println("DDD:JavaProc hipoPoint = "
-                + String.format("%x", hipoPointer)
-                + " HipoSize = " + hipoSize);
+        System.out.println("DDD: EventNumber = " + evtNumber
+                + " HIPOMagic = " + String.format("%x", hipoPointer)
+                + " HIPOSize = " + hipoSize);
     }
 }
