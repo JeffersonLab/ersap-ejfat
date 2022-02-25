@@ -75,13 +75,13 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             System.out.println("hey 3...");
 
             int evtLength = event.getEventBufferSize();
-            System.out.println("hey 4...");
+            System.out.println("hey 4... " +evtLength);
 
 
             ByteBuffer eventBuffer = event.getEventBuffer();
             eventBuffer.rewind();
 
-            System.out.println("hey 5...");
+            System.out.println("hey 5... " + eventBuffer.limit());
 
 //            byte[] evt = new byte[evtLength];
 //            eventBuffer.get(evt);
@@ -104,7 +104,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             System.out.println("hey 7...");
 
             payload.putInt(evtLength);  // length
-            System.out.println("hey 8...");
+            System.out.println("hey 8... ");
 
 //                    .put(outBuffer);
                     payload.put(eventBuffer);
