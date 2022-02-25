@@ -68,7 +68,8 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
             Event event = new Event();
-            reader.getEvent(event,eventNumber);
+//            reader.getEvent(event,eventNumber);
+            reader.nextEvent(event);
 
             int evtLength = event.getEventBufferSize();
 
