@@ -17,9 +17,10 @@ import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
 import org.json.JSONObject;
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Reads CLAS12 decoded HIPO files and streams build
@@ -27,17 +28,24 @@ import java.nio.file.Path;
  */
 public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
+    private Timer timer;
+private int evt;
+
     @Override
     protected HipoReader createReader(Path file, JSONObject opts)
             throws EventReaderException {
         try {
             HipoReader reader = new HipoReader();
             reader.open(file.toString());
+
+            timer = new Timer();
+            timer.schedule(new PrintRates(), 0, 1000);
+
+
             return reader;
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
-
     }
 
     @Override
@@ -65,7 +73,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
-            System.out.println(eventNumber);
+            evt++;
             Event event = new Event();
 //            reader.nextEvent(event);
 //            int evtLength = event.getEventBufferSize();
@@ -92,7 +100,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 //                    .putInt(evtLength) // length
 //                    .put(outBuffer);
 //            return payload;
-             return event;
+            return event;
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
@@ -102,5 +110,13 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
     protected EngineDataType getDataType() {
 //        return Clas12Types.HIPO;
         return EngineDataType.BYTES;
+    }
+
+    private class PrintRates extends TimerTask {
+        @Override
+        public void run() {
+            System.out.println("evtRate = "+ evt/1000F);
+            evt = 0;
+        }
     }
 }
