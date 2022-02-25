@@ -40,7 +40,7 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
             reader.open(file.toString());
 
             timer = new Timer();
-            timer.schedule(new PrintRates(), 0, 1000);
+            timer.schedule(new PrintRates(), 0, 10000);
 
             return reader;
         } catch (Exception e) {
