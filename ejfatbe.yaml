@@ -18,7 +18,7 @@ configuration:
     writer:
       file-events: 10000
   services:
-    DummyEngine:
+    DummyEngineBE:
       print-interval: 1
       delay: 0
 mime-types:

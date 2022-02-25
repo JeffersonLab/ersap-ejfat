@@ -31,6 +31,8 @@ public class RingEjfatEvent {
 
     public void setPayload(byte[] payload) {
         this.payload = payload;
+        payloadBuffer = ByteBuffer.wrap(payload);
+        payloadBuffer.order(ByteOrder.LITTLE_ENDIAN);
     }
 
     public ByteBuffer getPayloadBuffer() {
