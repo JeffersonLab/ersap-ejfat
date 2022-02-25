@@ -79,6 +79,8 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
 
             ByteBuffer eventBuffer = event.getEventBuffer();
+            eventBuffer.rewind();
+
             System.out.println("hey 5...");
 
 //            byte[] evt = new byte[evtLength];
