@@ -338,6 +338,7 @@ namespace ejfat {
       *                   which includes IP and UDP headers.
       * @param port       UDP port to send to.
       * @param tick       tick value for Load Balancer header used in directing packets to final host.
+      * @param protocol   protocol reassembly header.
       * @param version    version in reassembly header.
       * @param dataId     data id in reassembly header.
       * @param delay      delay in millisec between each packet being sent.

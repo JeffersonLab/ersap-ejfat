@@ -132,7 +132,7 @@ namespace ejfat {
         //        std::cout << "EJFAT processing..." << std::endl;
 
         int err = sendBuffer(buffer, bufLen, host, interface,
-                             mtu, port, tick, protocol, version, dataId, delay, debug, true);
+                             mtu, port, tick, protocol, version, dataId, delay, debug);
         if (err < 0) {
             fprintf(stderr, "\nError in ejfat_packetize_engine.process(): %s\n", strerror(errno));
             exit (-1);
@@ -149,7 +149,7 @@ namespace ejfat {
 //        std::cout << "EJFAT processing..." << std::endl;
 
         int err = sendBuffer(buffer, bufLen, host, interface,
-                             mtu, port, tick, protocol, version, dataId, delay, debug, true);
+                             mtu, port, tick, protocol, version, dataId, delay, debug);
         if (err < 0) {
             fprintf(stderr, "\nError in ejfat_packetize_engine.process(): %s\n", strerror(errno));
             exit (-1);
