@@ -1,6 +1,7 @@
 package org.jlab.epsci.ersap.ejfat.io.engine;
 
-import org.jlab.epsci.ersap.ejfat.io.be.EjfatReader;
+import org.jlab.coda.et.EtConstants;
+import org.jlab.epsci.ersap.ejfat.io.be.EjfatEtReader;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
@@ -17,17 +18,23 @@ import java.nio.file.Path;
  * 12000, Jefferson Ave, Newport News, VA 23606
  * Phone : (757)-269-7100
  *
- * @author gurjyan on 2/22/22
+ * @author gurjyan on 3/15/22
  * @project ersap-ejfat
  */
-public class EjfatReaderEngine extends AbstractEventReaderService<EjfatReader> {
-    private static final String PORT = "port";
+public class EjfatEtReaderEngine extends AbstractEventReaderService<EjfatEtReader> {
+    private static final String ETNAME = "et_name";
+    private static final String HOSTNAME = "et_host";
+    private static final String TPORT = "et_tcp_port";
+    private static final String VERBOSE = "verbose";
 
     @Override
-    protected EjfatReader createReader(Path file, JSONObject opts) throws EventReaderException {
-        int port = opts.has(PORT) ? opts.getInt(PORT) : 6000;
+    protected EjfatEtReader createReader(Path file, JSONObject opts) throws EventReaderException {
+        String etName = opts.has(ETNAME) ? opts.getString(ETNAME) : "/tmp/et_sys";
+        String hostName = opts.has(HOSTNAME) ? opts.getString(HOSTNAME) : EtConstants.hostLocal;
+        int tport = opts.has(TPORT) ? opts.getInt(TPORT) : EtConstants.serverPort;
+        boolean verbose = opts.has(VERBOSE) && opts.getBoolean(VERBOSE);
         try {
-            EjfatReader reader = new EjfatReader(port);
+            EjfatEtReader reader = new EjfatEtReader(etName, hostName, tport, verbose);
             reader.go();
             return reader;
         } catch (Exception e) {
@@ -37,7 +44,7 @@ public class EjfatReaderEngine extends AbstractEventReaderService<EjfatReader> {
 
     @Override
     protected void closeReader() {
-       reader.close();
+        reader.close();
     }
 
     @Override
@@ -58,6 +65,7 @@ public class EjfatReaderEngine extends AbstractEventReaderService<EjfatReader> {
             throw new EventReaderException(e);
         }
     }
+
 
     @Override
     protected EngineDataType getDataType() {

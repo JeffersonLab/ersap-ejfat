@@ -27,9 +27,6 @@ configurations {
 
 repositories {
 
-//    maven {
-//        url 'https://clasweb.jlab.org/jhep/maven/'
-//    }
     maven {
         url 'https://clasweb.jlab.org/clas12maven/'
     }

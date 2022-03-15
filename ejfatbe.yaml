@@ -1,8 +1,8 @@
 ---
 io-services:
   reader:
-    class: org.jlab.epsci.ersap.ejfat.io.engine.EjfatReaderEngine
-    name: EjfatSource
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EjfatEtReaderEngine
+    name: EjfatEtReaderEngine
   writer:
 #    class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoWriter
 #    name: HipoWriter
@@ -14,7 +14,10 @@ services:
 configuration:
   io-services:
     reader:
-      port: 6000
+      et_name: /tmp/test
+#      et_host: 6000
+#      et_tcp_port: 6000
+#      verbose: false
     writer:
       file-events: 10000
   services:

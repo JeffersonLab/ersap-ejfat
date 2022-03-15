@@ -1,7 +1,9 @@
 package org.jlab.epsci.ersap.ejfat.io.be;
 
 import com.lmax.disruptor.*;
+
 import java.nio.ByteBuffer;
+
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
 /**
@@ -12,27 +14,27 @@ import static com.lmax.disruptor.RingBuffer.createSingleProducer;
  * 12000, Jefferson Ave, Newport News, VA 23606
  * Phone : (757)-269-7100
  *
- * @author gurjyan on 2/22/22
+ * @author gurjyan on 3/15/22
  * @project ersap-ejfat
  */
-public class EjfatReader {
+public class EjfatEtReader {
     private final static int maxRingItems = 4;
 
     private RingBuffer<RingEjfatEvent> ringBuffer;
     private Sequence sequence;
     private SequenceBarrier sequenceBarrier;
 
-    private ReAssembleReceiver receiver;
+    private ReAssembleReceiverET receiver;
     private ReAssembleConsumer consumer;
 
-    public EjfatReader(int port) {
+    public EjfatEtReader(String etName, String hostName, int tPort, boolean verbose) {
         ringBuffer = createSingleProducer(new RingEjfatEventFactory(), maxRingItems,
                 new YieldingWaitStrategy());
         sequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier = ringBuffer.newBarrier();
         ringBuffer.addGatingSequences(sequence);
 
-        receiver = new ReAssembleReceiver(port, ringBuffer);
+        receiver = new ReAssembleReceiverET(etName, hostName, tPort, verbose, ringBuffer);
         consumer = new ReAssembleConsumer(ringBuffer, sequence, sequenceBarrier);
     }
 
