@@ -1,5 +1,5 @@
 #include "ejfat_assemble_engine.hpp"
-#include "ejfat_assemble.hpp"
+#include "ejfat_assemble_ersap.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -35,6 +35,8 @@ namespace ejfat {
 
         ctx = nullptr;
         sock = nullptr;
+
+        parseConfigFile();
     }
 
     EjfatAssembleEngine::~EjfatAssembleEngine()
@@ -161,7 +163,7 @@ namespace ejfat {
         }
 
         if (zmq) {
-            int err = zmq_send(sock, *userBuf, *userBufLen, 0);
+            err = zmq_send(sock, *userBuf, *userBufLen, 0);
             if (err < 0) {
                 perror("Problem sending data on zmq socket:");
                 exit (-1);
