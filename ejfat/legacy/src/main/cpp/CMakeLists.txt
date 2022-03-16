@@ -7,7 +7,9 @@ set(LEGACY_SRC
 
 add_library(ersap_ejfat SHARED ${LEGACY_SRC})
 target_link_libraries(ersap_ejfat PUBLIC ${ZeroMQ_LIBRARIES})
-target_link_libraries(ersap_ejfat PUBLIC "$ENV{CODA}/Linux-x86_64/lib")
+target_link_libraries(ersap_ejfat PUBLIC "$ENV{CODA}/Linux-x86_64/lib/libet.so")
+target_link_libraries(ersap_ejfat PUBLIC "$ENV{CODA}/Linux-x86_64/lib/libet_remote.so")
+target_link_libraries(ersap_ejfat PUBLIC "$ENV{CODA}/Linux-x86_64/lib/libet_jni.so")
 
 target_include_directories(ersap_ejfat PUBLIC ${ZeroMQ_INCLUDE_DIRS}
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
