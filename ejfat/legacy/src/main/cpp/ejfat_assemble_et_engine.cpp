@@ -155,7 +155,8 @@ namespace ejfat {
     {
         if (debug) std::cout << "EJFAT assembling ..." << std::endl;
 
-        int err = getBuffers(sock, fid, debug);
+//        int err = getBuffers(sock, fid, debug);
+        int err = getBuffer(sock, fid, debug);
         if (err < 0) {
             fprintf(stderr, "Error assembling packets, err = %d\n", err);
             exit (-1);
@@ -167,7 +168,8 @@ namespace ejfat {
     {
         if (debug) std::cout << "EJFAT assembling ..." << std::endl;
 
-        int err = getBuffers(_sock, _fid, _debug);
+//        int err = getBuffers(_sock, _fid, _debug);
+        int err = getBuffer(_sock, _fid, _debug);
         if (err < 0) {
             fprintf(stderr, "Error assembling packets, err = %d\n", err);
             exit (-1);
