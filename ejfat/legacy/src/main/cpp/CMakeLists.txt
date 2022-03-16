@@ -11,8 +11,8 @@ target_include_directories(ersap_ejfat PUBLIC ${ZeroMQ_INCLUDE_DIRS}
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
-add_library(ersap_ejfat SHARED IMPORTED)
-set_target_properties(ersap_ejfat PROPERTIES
+add_library(et SHARED IMPORTED)
+set_target_properties(et PROPERTIES
   IMPORTED_LOCATION "$ENV{CODA}/Linux-x86_64/lib/libet.so"
   IMPORTED_LOCATION "$ENV{CODA}/Linux-x86_64/lib/libet_remote.so"
   IMPORTED_LOCATION "$ENV{CODA}/Linux-x86_64/lib/libet_jni.so"
