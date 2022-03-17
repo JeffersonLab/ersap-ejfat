@@ -4,37 +4,32 @@ io-services:
     class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoReader
     name: ClasSource
   writer:
-#    class: org.jlab.epsci.ersap.ejfat.io.engine.EDummyWriter
-#    name: DummyIO
-    class: org.jlab.epsci.ersap.ejfat.io.engine.EEventWriter
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EDummyWriter
     name: EEventWriter
+#    class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoWriter
+#    name: HipoWriter
 services:
   - class: org.jlab.epsci.ersap.ejfat.proc.EDummyEngine
     name: DummyEngine
   - class: ejfat_packetize_service
     name: EjfatPacketizeService
     lang: cpp
-#  This engine cannot be part of the ERSAP
-#  - class: ejfat_assemble_service
-#    name: EjfatAssembleService
-#    lang: cpp
 configuration:
   io-services:
     writer:
-      file-events: 10000
+      file-events: 80000
   services:
     DummyEngine:
-      print-interval: 1000
+      print-interval: 10000
       delay: 0
     EjfatPacketizeService:
       port: 19522
-      host: 129.57.29.231
+      host: 10.1.2.3
+      #      host: 129.57.29.231
       interface: eth0
-      mtu: 1024
+      mtu: 8900
       version: 1
       dataId: 1
-      delay: 12
-#    EjfatAssembleService:
-#      zmq: on
+      delay: 0
 mime-types:
   - binary/bytes

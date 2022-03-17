@@ -1,11 +1,11 @@
 ---
 io-services:
   reader:
-    class: org.jlab.epsci.ersap.ejfat.io.engine.EjfatEtReaderEngine
-    name: EjfatEtReaderEngine
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EjfatReaderEngine
+    name: EjfatSource
   writer:
-#    class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoWriter
-#    name: HipoWriter
+    #    class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoWriter
+    #    name: HipoWriter
     class: org.jlab.epsci.ersap.ejfat.io.engine.EDummyWriter
     name: HipoWriter
 services:
@@ -14,15 +14,12 @@ services:
 configuration:
   io-services:
     reader:
-      et_name: /tmp/test
-#      et_host: 6000
-#      et_tcp_port: 6000
-#      verbose: false
+      port: 6000
     writer:
       file-events: 10000
   services:
     DummyEngineBE:
-      print-interval: 1
+      print-interval: 10000
       delay: 0
 mime-types:
   - binary/bytes
