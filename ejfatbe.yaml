@@ -1,7 +1,7 @@
 ---
 io-services:
   reader:
-    class: org.jlab.epsci.ersap.ejfat.io.engine.EjfatReaderEngine
+    class: org.jlab.epsci.ersap.ejfat.io.engine.EjfatEtReaderEngine
     name: EjfatSource
   writer:
     #    class: org.jlab.epsci.ersap.ejfat.io.engine.EClas12HipoWriter
@@ -14,12 +14,12 @@ services:
 configuration:
   io-services:
     reader:
-      port: 6000
+      et_name: /tmp/myEtFile
     writer:
       file-events: 10000
   services:
     DummyEngineBE:
-      print-interval: 10000
+      print-interval: 10
       delay: 0
 mime-types:
   - binary/bytes
