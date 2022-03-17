@@ -1,0 +1,11 @@
+---
+name: EjfatEtReaderEngine
+engine: org.jlab.epsci.ersap.ejfat.io.engine.EjfatEtReaderEngine
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  Gets reassembled EJFAT events from the ET
