@@ -51,17 +51,17 @@ public class ETotalDummy implements Engine {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Total dummy engine";
     }
 
     @Override
     public String getVersion() {
-        return null;
+        return "v1";
     }
 
     @Override
     public String getAuthor() {
-        return null;
+        return "gurjyan";
     }
 
     @Override
