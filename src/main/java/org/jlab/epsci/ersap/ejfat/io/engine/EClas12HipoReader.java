@@ -41,7 +41,7 @@ private int evt;
             reader.open(file.toString());
 
             timer = new Timer();
-            timer.schedule(new PrintRates(), 0, 30000);
+            timer.schedule(new PrintRates(), 0, 60000);
 
 
             return reader;
@@ -75,7 +75,8 @@ private int evt;
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
-            evt++;
+//            evt++;
+            evt = eventNumber;
             Event event = new Event();
             reader.nextEvent(event);
             int evtLength = event.getEventBufferSize();
@@ -117,7 +118,7 @@ private int evt;
     private class PrintRates extends TimerTask {
         @Override
         public void run() {
-            System.out.println("evtRate = "+ evt/30 + "Hz");
+            System.out.println("evtRate = "+ evt/60 + "Hz");
             evt = 0;
         }
     }
