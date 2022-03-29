@@ -120,6 +120,14 @@ private int evt;
         ArrayList<Integer> al = new ArrayList<>();
         @Override
         public void run() {
+            if (evt == 0) {
+                int sum = 0;
+                for (int i = 4; i<=al.size()-2; i++ ){
+                    sum += al.get(i);
+                }
+                System.out.println("average rate = " + sum/(al.size()-7));
+                this.cancel();
+            }
             System.out.println("evtRate = "+ evt + "Hz");
             al.add(evt);
             evt = 0;
