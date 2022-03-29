@@ -22,7 +22,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -120,7 +119,6 @@ private int evt = 1;
         ArrayList<Integer> al = new ArrayList<>();
         @Override
         public void run() {
-            System.out.println("DDD "+evt);
             if (evt == 0) {
                 int sum = 0;
                 for (int i = 4; i<=al.size()-2; i++ ){
