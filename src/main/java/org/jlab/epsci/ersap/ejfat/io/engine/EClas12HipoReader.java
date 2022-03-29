@@ -120,6 +120,7 @@ private int evt;
         ArrayList<Integer> al = new ArrayList<>();
         @Override
         public void run() {
+            System.out.println("DDD "+evt);
             if (evt == 0) {
                 int sum = 0;
                 for (int i = 4; i<=al.size()-2; i++ ){
