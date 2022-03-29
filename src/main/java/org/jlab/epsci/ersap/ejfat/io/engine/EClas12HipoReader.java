@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,7 +44,6 @@ private int evt;
 
             timer = new Timer();
             timer.schedule(new PrintRates(), 0, 1000);
-
 
             return reader;
         } catch (Exception e) {
@@ -76,6 +77,7 @@ private int evt;
     public Object readEvent(int eventNumber) throws EventReaderException {
         try {
             evt++;
+//            evt = eventNumber;
             Event event = new Event();
             reader.nextEvent(event);
             int evtLength = event.getEventBufferSize();
@@ -115,20 +117,13 @@ private int evt;
     }
 
     private class PrintRates extends TimerTask {
-        int i = 0;
-        int sum = 0;
+        ArrayList<Integer> al = new ArrayList<>();
         @Override
         public void run() {
-            i++;
-            if (i > 5) {
-                sum += evt;
-                evt = 0;
-            }
-            if (i == 60) {
-                System.out.println("evtRate = "+ sum/60 + "Hz");
-                i = 0;
-                sum = 0;
-            }
+            System.out.println("evtRate = "+ evt + "Hz");
+            al.add(evt);
+            evt = 0;
+
         }
     }
 }
