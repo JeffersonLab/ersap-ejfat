@@ -33,7 +33,7 @@ import java.util.TimerTask;
 public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
     private Timer timer;
-private int evt;
+private int evt = 1;
 
     @Override
     protected HipoReader createReader(Path file, JSONObject opts)
