@@ -31,6 +31,36 @@ public class EClas12HipoReader extends AbstractEventReaderService<HipoReader> {
 
     private Timer timer;
 private int evt = 1;
+private Object payload;
+
+private Object createSingleEvent(HipoReader reader, int eventNumber) {
+        Event event = new Event();
+        reader.nextEvent(event);
+        int evtLength = event.getEventBufferSize();
+
+        ByteBuffer eventBuffer = event.getEventBuffer();
+        eventBuffer.rewind();
+
+        byte[] evt = new byte[evtLength];
+        eventBuffer.get(evt);
+
+        ByteBuffer outBuffer = ByteBuffer.wrap(evt);
+        outBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        outBuffer.rewind();
+
+        // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
+//            int hipoPointer = outBuffer.getInt();
+//            int hipoSize = outBuffer.getInt();
+//            System.out.println("DDD:Reader hipoPoint = "
+//                    + String.format("%x", hipoPointer)
+//                    + " HipoSize = " + hipoSize);
+
+        ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
+                .putInt(eventNumber) //tick
+                .putInt(evtLength) // length
+                .put(outBuffer);
+        return payload;
+}
 
     @Override
     protected HipoReader createReader(Path file, JSONObject opts)
@@ -38,6 +68,9 @@ private int evt = 1;
         try {
             HipoReader reader = new HipoReader();
             reader.open(file.toString());
+
+            // create event number 13 data
+            payload = createSingleEvent(reader,13);
 
             timer = new Timer();
             timer.schedule(new PrintRates(), 0, 1000);
@@ -72,39 +105,42 @@ private int evt = 1;
      */
     @Override
     public Object readEvent(int eventNumber) throws EventReaderException {
-        try {
-            evt++;
-//            evt = eventNumber;
-            Event event = new Event();
-            reader.nextEvent(event);
-            int evtLength = event.getEventBufferSize();
+        evt++;
+        return payload;
 
-            ByteBuffer eventBuffer = event.getEventBuffer();
-            eventBuffer.rewind();
-
-            byte[] evt = new byte[evtLength];
-            eventBuffer.get(evt);
-
-            ByteBuffer outBuffer = ByteBuffer.wrap(evt);
-            outBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            outBuffer.rewind();
-
-            // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
-//            int hipoPointer = outBuffer.getInt();
-//            int hipoSize = outBuffer.getInt();
-//            System.out.println("DDD:Reader hipoPoint = "
-//                    + String.format("%x", hipoPointer)
-//                    + " HipoSize = " + hipoSize);
-
-            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
-                    .putInt(eventNumber) //tick
-                    .putInt(evtLength) // length
-                    .put(outBuffer);
-            return payload;
-//            return event.getEventBuffer();
-        } catch (Exception e) {
-            throw new EventReaderException(e);
-        }
+//        try {
+//            evt++;
+////            evt = eventNumber;
+//            Event event = new Event();
+//            reader.nextEvent(event);
+//            int evtLength = event.getEventBufferSize();
+//
+//            ByteBuffer eventBuffer = event.getEventBuffer();
+//            eventBuffer.rewind();
+//
+//            byte[] evt = new byte[evtLength];
+//            eventBuffer.get(evt);
+//
+//            ByteBuffer outBuffer = ByteBuffer.wrap(evt);
+//            outBuffer.order(ByteOrder.LITTLE_ENDIAN);
+//            outBuffer.rewind();
+//
+//            // Debug printout to check the consistency of the h5. hipoPointer = 61345645 (EV4a)
+////            int hipoPointer = outBuffer.getInt();
+////            int hipoSize = outBuffer.getInt();
+////            System.out.println("DDD:Reader hipoPoint = "
+////                    + String.format("%x", hipoPointer)
+////                    + " HipoSize = " + hipoSize);
+//
+//            ByteBuffer payload = ByteBuffer.allocate(evtLength + 8)
+//                    .putInt(eventNumber) //tick
+//                    .putInt(evtLength) // length
+//                    .put(outBuffer);
+//            return payload;
+////            return event.getEventBuffer();
+//        } catch (Exception e) {
+//            throw new EventReaderException(e);
+//        }
     }
 
     @Override
