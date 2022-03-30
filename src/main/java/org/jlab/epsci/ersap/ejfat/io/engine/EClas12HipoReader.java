@@ -159,7 +159,7 @@ private Object createSingleEvent(HipoReader reader, int eventNumber) {
                     sum += al.get(i);
                 }
                 System.out.println("average rate = " + sum/al.size() +" Hz");
-//                System.out.println("min = " + Collections.min(al) +" max = " + Collections.max(al));
+                System.out.println("min = " + Collections.min(al) +" max = " + Collections.max(al));
                 this.cancel();
             }
             System.out.println("evtRate = "+ evt + "Hz");
