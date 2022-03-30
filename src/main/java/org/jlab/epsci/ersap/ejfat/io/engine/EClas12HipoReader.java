@@ -119,7 +119,7 @@ private int evt = 1;
         public void run() {
             if (evt == 0) {
                 int sum = 0;
-                for (int i = 0; i<=al.size(); i++ ){
+                for (int i = 0; i<al.size(); i++ ){
                     sum += al.get(i);
                 }
                 System.out.println("average rate = " + sum/al.size() +" Hz");
