@@ -121,10 +121,10 @@ private int evt = 1;
         public void run() {
             if (evt == 0) {
                 int sum = 0;
-                for (int i = 6; i<=al.size()-8; i++ ){
+                for (int i = 6; i<=al.size()-3; i++ ){
                     sum += al.get(i);
                 }
-                System.out.println("average rate = " + sum/(al.size()-15));
+                System.out.println("average rate = " + sum/(al.size()-10));
                 this.cancel();
             }
             System.out.println("evtRate = "+ evt + "Hz");
