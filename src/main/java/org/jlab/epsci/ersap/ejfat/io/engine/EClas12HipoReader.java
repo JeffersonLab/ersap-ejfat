@@ -21,9 +21,7 @@ import org.json.JSONObject;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Reads CLAS12 decoded HIPO files and streams build
@@ -120,11 +118,12 @@ private int evt = 1;
         @Override
         public void run() {
             if (evt == 0) {
-                int sum = 0;
-                for (int i = 6; i<=al.size()-3; i++ ){
-                    sum += al.get(i);
-                }
-                System.out.println("average rate = " + sum/(al.size()-10));
+//                int sum = 0;
+//                for (int i = 6; i<=al.size()-3; i++ ){
+//                    sum += al.get(i);
+//                }
+//                System.out.println("average rate = " + sum/(al.size()-10));
+                System.out.println("min = " + Collections.min(al) +" max = " + Collections.max(al));
                 this.cancel();
             }
             System.out.println("evtRate = "+ evt + "Hz");
