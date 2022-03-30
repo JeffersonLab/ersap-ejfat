@@ -118,12 +118,12 @@ private int evt = 1;
         @Override
         public void run() {
             if (evt == 0) {
-//                int sum = 0;
-//                for (int i = 6; i<=al.size()-3; i++ ){
-//                    sum += al.get(i);
-//                }
-//                System.out.println("average rate = " + sum/(al.size()-10));
-                System.out.println("min = " + Collections.min(al) +" max = " + Collections.max(al));
+                int sum = 0;
+                for (int i = 0; i<=al.size(); i++ ){
+                    sum += al.get(i);
+                }
+                System.out.println("average rate = " + sum/al.size() +" Hz");
+//                System.out.println("min = " + Collections.min(al) +" max = " + Collections.max(al));
                 this.cancel();
             }
             System.out.println("evtRate = "+ evt + "Hz");
