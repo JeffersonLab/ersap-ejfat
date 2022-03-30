@@ -162,7 +162,7 @@ private Object createSingleEvent(HipoReader reader, int eventNumber) {
                 System.out.println("min = " + Collections.min(al) +" max = " + Collections.max(al));
                 this.cancel();
             }
-            System.out.println("evtRate = "+ evt + "Hz");
+//            System.out.println("evtRate = "+ evt + "Hz");
             al.add(evt);
             evt = 0;
 
