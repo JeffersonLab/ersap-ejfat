@@ -1,8 +1,0 @@
-//
-// Created by Vardan Gurjyan on 9/16/22.
-//
-
-#ifndef ERSAP_EJFAT_PACKETIZEANDSEND_H
-#define ERSAP_EJFAT_PACKETIZEANDSEND_H
-
-#endif //ERSAP_EJFAT_PACKETIZEANDSEND_H
