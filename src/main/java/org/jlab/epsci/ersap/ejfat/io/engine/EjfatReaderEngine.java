@@ -23,6 +23,7 @@ import java.nio.file.Path;
 public class EjfatReaderEngine extends AbstractEventReaderService<EjfatReader> {
     private static final String PORT = "port";
 
+
     @Override
     protected EjfatReader createReader(Path file, JSONObject opts) throws EventReaderException {
         int port = opts.has(PORT) ? opts.getInt(PORT) : 6000;
