@@ -84,6 +84,7 @@ public class ReAssembleReceiver extends Thread {
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
                 System.out.println(e.getMessage());
+                System.exit(1);
             }
 
         }
