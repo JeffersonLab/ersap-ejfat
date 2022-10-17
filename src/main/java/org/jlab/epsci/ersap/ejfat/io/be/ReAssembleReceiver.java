@@ -69,6 +69,9 @@ public class ReAssembleReceiver extends Thread {
 //                int size = Short.toUnsignedInt(sz);
                 int size =  dataInputStream.readInt();
                 System.out.println("DDDDDDDDDDDDDDDDD "+ size);
+                for (int i=0; i<10;i++){
+                    System.out.println(dataInputStream.readInt());
+                }
                 byte[] payload = new byte[size];
                 dataInputStream.readFully(payload);
                 event.setPayload(payload);
