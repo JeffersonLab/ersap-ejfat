@@ -68,11 +68,10 @@ public class ReAssembleReceiver extends Thread {
 //                short sz = Short.reverseBytes(dataInputStream.readShort());
 //                int size = Short.toUnsignedInt(sz);
 
-//                int size =  dataInputStream.readInt();
-//                System.out.println("DDDDDDDDDDDDDDDDD "+ size);
-//                byte[] payload = new byte[size];
-                byte[] payload = new byte[64];
-//                dataInputStream.readFully(payload);
+                int size =  dataInputStream.readInt();
+                System.out.println("DDDDDDDDDDDDDDDDD "+ size);
+                byte[] payload = new byte[size];
+                dataInputStream.readFully(payload);
 
                 event.setPayload(payload);
 
@@ -84,8 +83,7 @@ public class ReAssembleReceiver extends Thread {
 
                 // Make the buffer available for consumers
                 publish();
-            } catch (InterruptedException e) {
-//            } catch (InterruptedException | IOException e) {
+            } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
                 System.out.println(e.getMessage());
                 System.exit(1);
