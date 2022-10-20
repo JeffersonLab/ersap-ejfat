@@ -70,6 +70,9 @@ public class ReAssembleReceiver extends Thread {
 
                 int size =  dataInputStream.readInt();
                 System.out.println("DDDDD =================== > "+ size);
+                size =  dataInputStream.readInt();
+                System.out.println("DDDDD =================== > "+ size);
+
                 byte[] payload = new byte[size];
 //                dataInputStream.readFully(payload);
 
