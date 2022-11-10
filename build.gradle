@@ -37,9 +37,6 @@ sourceSets {
 
 repositories {
     maven {
-        url 'https://clasweb.jlab.org/jhep/maven/'
-    }
-    maven {
         url 'https://clasweb.jlab.org/clas12maven/'
     }
     mavenCentral()
@@ -51,7 +48,6 @@ dependencies {
     implementation 'com.google.code.findbugs:findbugs-annotations:3.0.1'
     api 'org.json:json:20160810'
 //    implementation 'com.lmax:disruptor:3.4.0'
-    implementation 'org.jlab.jnp:jnp-hipo:1.1-SNAPSHOT'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.9.0'
     implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.15.6'
