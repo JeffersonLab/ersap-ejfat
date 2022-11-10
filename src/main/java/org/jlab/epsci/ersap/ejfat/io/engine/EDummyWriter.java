@@ -1,5 +1,6 @@
 package org.jlab.epsci.ersap.ejfat.io.engine;
 
+import org.jlab.epsci.ersap.ejfat.data.Clas12Types;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventWriterService;
 import org.jlab.epsci.ersap.std.services.EventWriterException;
@@ -47,6 +48,8 @@ public class EDummyWriter extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected EngineDataType getDataType() {
-        return EngineDataType.BYTES;
+
+        return Clas12Types.HIPO;
+//        return EngineDataType.BYTES;
     }
 }
