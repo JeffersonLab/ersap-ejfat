@@ -1,5 +1,6 @@
 package org.jlab.epsci.ersap.ejfat.io.engine;
 
+import org.jlab.epsci.ersap.ejfat.data.Clas12Types;
 import org.jlab.epsci.ersap.ejfat.io.be.EjfatReader;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
@@ -62,6 +63,7 @@ public class EjfatReaderEngine extends AbstractEventReaderService<EjfatReader> {
 
     @Override
     protected EngineDataType getDataType() {
-        return EngineDataType.BYTES;
+        return Clas12Types.HIPO;
+//        return EngineDataType.BYTES;
     }
 }
