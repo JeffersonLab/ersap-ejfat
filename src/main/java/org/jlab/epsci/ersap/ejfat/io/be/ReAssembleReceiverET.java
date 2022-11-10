@@ -91,17 +91,17 @@ public class ReAssembleReceiverET extends Thread {
             // Go through each event and do something with it
             for (int i=0; i < entryCap; i++) {
                 // Does this buffer have any data? (Set by producer). If not ...
-                if (!mevs[i].hasFifoData()) {
-                    // Once we hit a buffer with no data, there is no further data
-                    break;
-                }
+//                if (!mevs[i].hasFifoData()) {
+//                     Once we hit a buffer with no data, there is no further data
+//                    break;
+//                }
                 // Get an empty item from ring
                 RingEjfatEvent event = get();
 
                 idCount++;
 
                 // Source Id associated with this buffer in this fifo entry
-                bufId = mevs[i].getFifoId();
+//                bufId = mevs[i].getFifoId();
 
                 // Get event's data buffer
                 ByteBuffer buf = mevs[i].getDataBuffer();

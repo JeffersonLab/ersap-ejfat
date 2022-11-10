@@ -14,7 +14,7 @@ package org.jlab.epsci.ersap.ejfat.data;
 import org.jlab.epsci.ersap.base.error.ErsapException;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.engine.ErsapSerializer;
-
+import org.jlab.jnp.hipo.data.HipoEvent;
 import java.nio.ByteBuffer;
 
 public final class Clas12Types {
